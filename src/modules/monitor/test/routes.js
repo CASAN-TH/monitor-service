@@ -16,8 +16,54 @@ describe('Monitor CRUD routes tests', function () {
 
     before(function (done) {
         mockup = {
-            name: 'name'
+            name: 'name',
+            totalorderamount:200,
+            status:'waitwithdrawal',
+            team:{
+                teamname:'lovelove'
+            },
+            orders: [{
+                customer: {
+                    firstname: 'Nutshapon',
+                    lastname: 'Lertlaosakun',
+                    tel: '025337172',
+                    address: [
+                        {
+                            houseno: "55/7",
+                            village: "casa-city",
+                            street: "lumlukka Road",
+                            subdistrict: "บึงคำพร้อย",
+                            district: "lumlukka",
+                            province: "phathumthani",
+                            zipcode: "12150"
+                        }
+                    ]
+                },
+                items: [
+                    {
+                        name: 'ลิปติก',
+                        option: [
+                            {
+                                name: 'สี',
+                                value: [{
+                                    name: '#01',
+                                    qty: 2,
+                                }],
+                            }
+                        ],
+                        price: 100,
+                        amount: 200
+                    }
+                ],
+                totalamount: 200,
+                paymenttype:
+                {
+                    name: "ปลายทาง"
+                }
+            }],
+
         };
+
         credentials = {
             username: 'username',
             password: 'password',
@@ -32,18 +78,18 @@ describe('Monitor CRUD routes tests', function () {
         done();
     });
 
-    it('should be Monitor get use token', (done)=>{
+    it('should be Monitor get use token', (done) => {
         request(app)
-        .get('/api/monitors')
-        .set('Authorization', 'Bearer ' + token)
-        .expect(200)
-        .end((err, res)=>{
-            if (err) {
-                return done(err);
-            }
-            var resp = res.body;
-            done();
-        });
+            .get('/api/monitors')
+            .set('Authorization', 'Bearer ' + token)
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                done();
+            });
     });
 
     it('should be Monitor get by id', function (done) {
@@ -75,7 +121,7 @@ describe('Monitor CRUD routes tests', function () {
 
     });
 
-    it('should be Monitor post use token', (done)=>{
+    it('should be Monitor post use token', (done) => {
         request(app)
             .post('/api/monitors')
             .set('Authorization', 'Bearer ' + token)
@@ -144,15 +190,15 @@ describe('Monitor CRUD routes tests', function () {
 
     });
 
-    it('should be monitor get not use token', (done)=>{
+    it('should be monitor get not use token', (done) => {
         request(app)
-        .get('/api/monitors')
-        .expect(403)
-        .expect({
-            status: 403,
-            message: 'User is not authorized'
-        })
-        .end(done);
+            .get('/api/monitors')
+            .expect(403)
+            .expect({
+                status: 403,
+                message: 'User is not authorized'
+            })
+            .end(done);
     });
 
     it('should be monitor post not use token', function (done) {
