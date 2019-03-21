@@ -328,6 +328,157 @@ describe('Monitor CRUD routes tests', function () {
 
     });
 
+    xit('This can respones only report', function (done) {
+        var monitor1 = new Monitor({
+            totalorderamount: 700,
+            status: 'waitwithdrawal',
+            team: {
+                teamname: 'Love1'
+            },
+            orders: [{
+                customer: {
+                    firstname: 'nutnut',
+                    lastname: 'lerlao',
+                    tel: '025333333',
+                    address: {
+                        houseno: "68/78",
+                        village: "casan",
+                        street: "lumlukka test1",
+                        subdistrict: "บึงคำพร้อย1",
+                        district: "lumlukka test1",
+                        province: "phathumthani test1",
+                        zipcode: "12130"
+                    }
+                },
+                items: [
+                    {
+                        name: 'ลิปติก',
+                        option: [
+                            {
+                                name: 'สี',
+                                value: [{
+                                    name: '#01',
+                                    qty: 3,
+                                }],
+                            }
+                        ],
+                        price: 100,
+                        amount: 300
+                    },
+                    {
+                        name: 'แป้งตลับ',
+                        option: [
+                            {
+                                name: 'เบอร์',
+                                value: [{
+                                    name: '#02',
+                                    qty: 4,
+                                }],
+                            }
+                        ],
+                        price: 100,
+                        amount: 400
+                    }
+                ],
+                totalamount: 700,
+                paymenttype:
+                {
+                    name: "ปลายทาง"
+                }
+            },{
+                customer: {
+                    firstname: 'nutnut2',
+                    lastname: 'lerlao2',
+                    tel: '0255555555',
+                    address: {
+                        houseno: "55/986",
+                        village: "casan",
+                        street: "lumlukka test1",
+                        subdistrict: "บึงคำพร้อย1",
+                        district: "lumlukka test1",
+                        province: "phathumthani test1",
+                        zipcode: "12130"
+                    }
+                },
+                items: [
+                    {
+                        name: 'ลิปติก',
+                        option: [
+                            {
+                                name: 'สี',
+                                value: [{
+                                    name: '#01',
+                                    qty: 4,
+                                }],
+                            }
+                        ],
+                        price: 100,
+                        amount: 400
+                    },
+                    {
+                        name: 'แป้งตลับ',
+                        option: [
+                            {
+                                name: 'เบอร์',
+                                value: [{
+                                    name: '#02',
+                                    qty: 8,
+                                }],
+                            }
+                        ],
+                        price: 100,
+                        amount: 800
+                    }
+                ],
+                totalamount: 1200,
+                paymenttype:
+                {
+                    name: "ปลายทาง"
+                }
+            }],
+            logs: [{
+                remark: "print Again"
+            }]
+        })
+        request(app)
+            .post('/api/monitors')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockup)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                monitor1.save(function (err, mo1) {
+                    request(app)
+                        .get('/api/monitor/report/' + mo1._id)
+                        .set('Authorization', 'Bearer ' + token)
+                        .expect(200)
+                        .end(function (err, res) {
+                            if (err) {
+                                return done(err);
+                            }
+                            var resp = res.body;
+                            // console.log(resp)
+                            done();
+                            assert.equal(resp.data.teamname, mo1.team.teamname)
+                            assert.equal(resp.data.reportall.items[0].name, mo1.orders[0].items[0].name)
+                            assert.equal(resp.data.reportall.items[0].qty, 7)
+                            assert.equal(resp.data.reportall.items[0].price, mo1.orders[0].items[0].price)
+                            assert.equal(resp.data.reportall.totalprice, mo1.orders[0].totalamount)
+                            assert.equal(resp.data.reportall.totalqty, 7)
+                            assert.equal(resp.data.reportdetail[0].customer.firstname, 'nutnut')
+                            assert.equal(resp.data.reportdetail[0].customer.lastname, 'lerlao')
+                            assert.equal(resp.data.reportdetail[0].items[0].name, 'ลิปติก(สี)')
+                            assert.equal(resp.data.reportdetail[0].items[0].value[0].name, mo1.orders[0].items[0].option[0].value[0].name)
+                            assert.equal(resp.data.reportdetail[0].items[0].value[0].qty, mo1.orders[0].items[0].option[0].value[0].qty)
+                        });
+                })
+            });
+
+    })
+
     afterEach(function (done) {
         Monitor.remove().exec(done);
     });
