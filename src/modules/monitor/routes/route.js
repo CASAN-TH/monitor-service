@@ -15,7 +15,11 @@ module.exports = function (app) {
         .delete(controller.delete);
 
     app.route('/api/monitor/report/:monitorId')
-        .get(controller.getReport)
+        .get(
+            controller.getReport,
+            controller.reportDetailData,
+            controller.returnData
+            )
 
     app.param('monitorId', controller.getByID);
 

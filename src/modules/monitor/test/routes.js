@@ -328,9 +328,9 @@ describe('Monitor CRUD routes tests', function () {
 
     });
 
-    xit('This can respones only report', function (done) {
+    it('This can respones only report', function (done) {
         var monitor1 = new Monitor({
-            totalorderamount: 700,
+            totalorderamount: 2100,
             status: 'waitwithdrawal',
             team: {
                 teamname: 'Love1'
@@ -376,16 +376,16 @@ describe('Monitor CRUD routes tests', function () {
                                 }],
                             }
                         ],
-                        price: 100,
-                        amount: 400
+                        price: 50,
+                        amount: 200
                     }
                 ],
-                totalamount: 700,
+                totalamount: 500,
                 paymenttype:
                 {
                     name: "ปลายทาง"
                 }
-            },{
+            }, {
                 customer: {
                     firstname: 'nutnut2',
                     lastname: 'lerlao2',
@@ -416,7 +416,7 @@ describe('Monitor CRUD routes tests', function () {
                         amount: 400
                     },
                     {
-                        name: 'แป้งตลับ',
+                        name: 'ปัดขนตา',
                         option: [
                             {
                                 name: 'เบอร์',
@@ -426,11 +426,11 @@ describe('Monitor CRUD routes tests', function () {
                                 }],
                             }
                         ],
-                        price: 100,
-                        amount: 800
+                        price: 150,
+                        amount: 1200
                     }
                 ],
-                totalamount: 1200,
+                totalamount: 1600,
                 paymenttype:
                 {
                     name: "ปลายทาง"
@@ -460,19 +460,37 @@ describe('Monitor CRUD routes tests', function () {
                                 return done(err);
                             }
                             var resp = res.body;
-                            // console.log(resp)
-                            done();
+                            // console.log(resp.data)
                             assert.equal(resp.data.teamname, mo1.team.teamname)
                             assert.equal(resp.data.reportall.items[0].name, mo1.orders[0].items[0].name)
-                            assert.equal(resp.data.reportall.items[0].qty, 7)
+                            assert.equal(resp.data.reportall.items[1].name, mo1.orders[0].items[1].name)
+                            assert.equal(resp.data.reportall.items[2].name, mo1.orders[1].items[1].name)
+                            assert.equal(resp.data.reportall.items[0].qty, mo1.orders[0].items[0].option[0].value[0].qty + mo1.orders[1].items[0].option[0].value[0].qty)
+                            assert.equal(resp.data.reportall.items[1].qty, mo1.orders[0].items[1].option[0].value[0].qty)
+                            assert.equal(resp.data.reportall.items[2].qty, mo1.orders[1].items[1].option[0].value[0].qty)
                             assert.equal(resp.data.reportall.items[0].price, mo1.orders[0].items[0].price)
-                            assert.equal(resp.data.reportall.totalprice, mo1.orders[0].totalamount)
-                            assert.equal(resp.data.reportall.totalqty, 7)
-                            assert.equal(resp.data.reportdetail[0].customer.firstname, 'nutnut')
-                            assert.equal(resp.data.reportdetail[0].customer.lastname, 'lerlao')
-                            assert.equal(resp.data.reportdetail[0].items[0].name, 'ลิปติก(สี)')
-                            assert.equal(resp.data.reportdetail[0].items[0].value[0].name, mo1.orders[0].items[0].option[0].value[0].name)
-                            assert.equal(resp.data.reportdetail[0].items[0].value[0].qty, mo1.orders[0].items[0].option[0].value[0].qty)
+                            assert.equal(resp.data.reportall.items[1].price, mo1.orders[0].items[1].price)
+                            assert.equal(resp.data.reportall.items[2].price, mo1.orders[1].items[1].price)
+                            assert.equal(resp.data.reportall.totalprice, mo1.totalorderamount)
+                            assert.equal(resp.data.reportall.totalqty, mo1.orders[0].items[0].option[0].value[0].qty + mo1.orders[1].items[0].option[0].value[0].qty + mo1.orders[0].items[1].option[0].value[0].qty + mo1.orders[1].items[1].option[0].value[0].qty)
+                            assert.equal(resp.data.reportDetail.length, 2)
+                            assert.equal(resp.data.reportDetail[0].customer.firstname, mo1.orders[0].customer.firstname)
+                            assert.equal(resp.data.reportDetail[0].customer.lastname, mo1.orders[0].customer.lastname)
+                            assert.equal(resp.data.reportDetail[0].items[0].name, 'ลิปติก(สี)')
+                            assert.equal(resp.data.reportDetail[0].items[0].value[0].name, mo1.orders[0].items[0].option[0].value[0].name)
+                            assert.equal(resp.data.reportDetail[0].items[0].value[0].qty, mo1.orders[0].items[0].option[0].value[0].qty)
+                            assert.equal(resp.data.reportDetail[0].items[1].name, 'แป้งตลับ(เบอร์)')
+                            assert.equal(resp.data.reportDetail[0].items[1].value[0].name, mo1.orders[0].items[1].option[0].value[0].name)
+                            assert.equal(resp.data.reportDetail[0].items[1].value[0].qty, mo1.orders[0].items[1].option[0].value[0].qty)
+                            assert.equal(resp.data.reportDetail[1].customer.firstname, mo1.orders[1].customer.firstname)
+                            assert.equal(resp.data.reportDetail[1].customer.lastname, mo1.orders[1].customer.lastname)
+                            assert.equal(resp.data.reportDetail[1].items[0].name, 'ลิปติก(สี)')
+                            assert.equal(resp.data.reportDetail[1].items[0].value[0].name, mo1.orders[1].items[0].option[0].value[0].name)
+                            assert.equal(resp.data.reportDetail[1].items[0].value[0].qty, mo1.orders[1].items[0].option[0].value[0].qty)
+                            assert.equal(resp.data.reportDetail[1].items[1].name, 'ปัดขนตา(เบอร์)')
+                            assert.equal(resp.data.reportDetail[1].items[1].value[0].name, mo1.orders[1].items[1].option[0].value[0].name)
+                            assert.equal(resp.data.reportDetail[1].items[1].value[0].qty, mo1.orders[1].items[1].option[0].value[0].qty)
+                            done();
                         });
                 })
             });
