@@ -16,11 +16,10 @@ describe('Monitor CRUD routes tests', function () {
 
     before(function (done) {
         mockup = {
-            name: 'name',
-            totalorderamount:200,
-            status:'waitwithdrawal',
-            team:{
-                teamname:'lovelove'
+            totalorderamount: 200,
+            status: 'waitwithdrawal',
+            team: {
+                teamname: 'lovelove'
             },
             orders: [{
                 customer: {
@@ -61,7 +60,9 @@ describe('Monitor CRUD routes tests', function () {
                     name: "ปลายทาง"
                 }
             }],
-
+            logs: [{
+                remark: "print Again"
+            }]
         };
 
         credentials = {
@@ -114,7 +115,7 @@ describe('Monitor CRUD routes tests', function () {
                         }
                         var resp = res.body;
                         assert.equal(resp.status, 200);
-                        assert.equal(resp.data.name, mockup.name);
+                        assert.equal(resp.data.totalorderamount, mockup.totalorderamount);
                         done();
                     });
             });
@@ -132,7 +133,7 @@ describe('Monitor CRUD routes tests', function () {
                     return done(err);
                 }
                 var resp = res.body;
-                assert.equal(resp.data.name, mockup.name);
+                assert.equal(resp.data.totalorderamount, mockup.totalorderamount);
                 done();
             });
     });
@@ -150,7 +151,7 @@ describe('Monitor CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 var update = {
-                    name: 'name update'
+                    totalorderamount: 250
                 }
                 request(app)
                     .put('/api/monitors/' + resp.data._id)
@@ -162,7 +163,7 @@ describe('Monitor CRUD routes tests', function () {
                             return done(err);
                         }
                         var resp = res.body;
-                        assert.equal(resp.data.name, update.name);
+                        assert.equal(resp.data.totalorderamount, update.totalorderamount);
                         done();
                     });
             });
@@ -228,7 +229,7 @@ describe('Monitor CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 var update = {
-                    name: 'name update'
+                    totalorderamount: 250
                 }
                 request(app)
                     .put('/api/monitors/' + resp.data._id)
