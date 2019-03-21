@@ -106,6 +106,52 @@ var MonitorSchema = new Schema({
                         }
                     ]
                 },
+                lables:{
+                    type:[{
+                        trackno:{
+                            type:String
+                        },
+                        firstname:{
+                            type:String
+                        },
+                        lastname:{
+                            type:String
+                        },
+                        address: {
+                            houseno: {
+                                type: String
+                            },
+                            village: {
+                                type: String
+                            },
+                            street: {
+                                type: String
+                            },
+                            subdistrict: {
+                                type: String
+                            },
+                            district: {
+                                type: String
+                            },
+                            province: {
+                                type: String
+                            },
+                            zipcode: {
+                                type: String
+                            }
+                        },
+                        productlist:{
+                            type:{
+                                name:{
+                                    type:String
+                                },
+                                qty:{
+                                    type:String
+                                }
+                            }
+                        }     
+                    }]
+                },
                 totalamount: {
                     type: Number
                 },
