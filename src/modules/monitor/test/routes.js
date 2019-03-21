@@ -26,17 +26,15 @@ describe('Monitor CRUD routes tests', function () {
                     firstname: 'Nutshapon',
                     lastname: 'Lertlaosakun',
                     tel: '025337172',
-                    address: [
-                        {
-                            houseno: "55/7",
-                            village: "casa-city",
-                            street: "lumlukka Road",
-                            subdistrict: "บึงคำพร้อย",
-                            district: "lumlukka",
-                            province: "phathumthani",
-                            zipcode: "12150"
-                        }
-                    ]
+                    address: {
+                        houseno: "55/7",
+                        village: "casa-city",
+                        street: "lumlukka Road",
+                        subdistrict: "บึงคำพร้อย",
+                        district: "lumlukka",
+                        province: "phathumthani",
+                        zipcode: "12150"
+                    }
                 },
                 items: [
                     {
@@ -116,6 +114,26 @@ describe('Monitor CRUD routes tests', function () {
                         var resp = res.body;
                         assert.equal(resp.status, 200);
                         assert.equal(resp.data.totalorderamount, mockup.totalorderamount);
+                        assert.equal(resp.data.status, mockup.status);
+                        assert.equal(resp.data.team.teamname, mockup.team.teamname);
+                        assert.equal(resp.data.orders[0].customer.firstname, mockup.orders[0].customer.firstname);
+                        assert.equal(resp.data.orders[0].customer.lastname, mockup.orders[0].customer.lastname);
+                        assert.equal(resp.data.orders[0].customer.tel, mockup.orders[0].customer.tel);
+                        assert.equal(resp.data.orders[0].customer.address.houseno, mockup.orders[0].customer.address.houseno);
+                        assert.equal(resp.data.orders[0].customer.address.village, mockup.orders[0].customer.address.village);
+                        assert.equal(resp.data.orders[0].customer.address.street, mockup.orders[0].customer.address.street);
+                        assert.equal(resp.data.orders[0].customer.address.subdistrict, mockup.orders[0].customer.address.subdistrict);
+                        assert.equal(resp.data.orders[0].customer.address.district, mockup.orders[0].customer.address.district);
+                        assert.equal(resp.data.orders[0].customer.address.province, mockup.orders[0].customer.address.province);
+                        assert.equal(resp.data.orders[0].customer.address.zipcode, mockup.orders[0].customer.address.zipcode);
+                        assert.equal(resp.data.orders[0].items[0].name, mockup.orders[0].items[0].name);
+                        assert.equal(resp.data.orders[0].items[0].option[0].name, mockup.orders[0].items[0].option[0].name);
+                        assert.equal(resp.data.orders[0].items[0].option[0].value[0].name, mockup.orders[0].items[0].option[0].value[0].name);
+                        assert.equal(resp.data.orders[0].items[0].option[0].value[0].qty, mockup.orders[0].items[0].option[0].value[0].qty);
+                        assert.equal(resp.data.orders[0].items[0].price, mockup.orders[0].items[0].price);
+                        assert.equal(resp.data.orders[0].items[0].amount, mockup.orders[0].items[0].amount);
+                        assert.equal(resp.data.orders[0].totalamount, mockup.orders[0].totalamount);
+                        assert.equal(resp.data.logs.remark, mockup.logs.remark);
                         done();
                     });
             });
@@ -133,7 +151,28 @@ describe('Monitor CRUD routes tests', function () {
                     return done(err);
                 }
                 var resp = res.body;
+                assert.equal(resp.status, 200);
                 assert.equal(resp.data.totalorderamount, mockup.totalorderamount);
+                assert.equal(resp.data.status, mockup.status);
+                assert.equal(resp.data.team.teamname, mockup.team.teamname);
+                assert.equal(resp.data.orders[0].customer.firstname, mockup.orders[0].customer.firstname);
+                assert.equal(resp.data.orders[0].customer.lastname, mockup.orders[0].customer.lastname);
+                assert.equal(resp.data.orders[0].customer.tel, mockup.orders[0].customer.tel);
+                assert.equal(resp.data.orders[0].customer.address.houseno, mockup.orders[0].customer.address.houseno);
+                assert.equal(resp.data.orders[0].customer.address.village, mockup.orders[0].customer.address.village);
+                assert.equal(resp.data.orders[0].customer.address.street, mockup.orders[0].customer.address.street);
+                assert.equal(resp.data.orders[0].customer.address.subdistrict, mockup.orders[0].customer.address.subdistrict);
+                assert.equal(resp.data.orders[0].customer.address.district, mockup.orders[0].customer.address.district);
+                assert.equal(resp.data.orders[0].customer.address.province, mockup.orders[0].customer.address.province);
+                assert.equal(resp.data.orders[0].customer.address.zipcode, mockup.orders[0].customer.address.zipcode);
+                assert.equal(resp.data.orders[0].items[0].name, mockup.orders[0].items[0].name);
+                assert.equal(resp.data.orders[0].items[0].option[0].name, mockup.orders[0].items[0].option[0].name);
+                assert.equal(resp.data.orders[0].items[0].option[0].value[0].name, mockup.orders[0].items[0].option[0].value[0].name);
+                assert.equal(resp.data.orders[0].items[0].option[0].value[0].qty, mockup.orders[0].items[0].option[0].value[0].qty);
+                assert.equal(resp.data.orders[0].items[0].price, mockup.orders[0].items[0].price);
+                assert.equal(resp.data.orders[0].items[0].amount, mockup.orders[0].items[0].amount);
+                assert.equal(resp.data.orders[0].totalamount, mockup.orders[0].totalamount);
+                assert.equal(resp.data.logs.remark, mockup.logs.remark);
                 done();
             });
     });
@@ -163,7 +202,28 @@ describe('Monitor CRUD routes tests', function () {
                             return done(err);
                         }
                         var resp = res.body;
+                        assert.equal(resp.status, 200);
                         assert.equal(resp.data.totalorderamount, update.totalorderamount);
+                        assert.equal(resp.data.status, mockup.status);
+                        assert.equal(resp.data.team.teamname, mockup.team.teamname);
+                        assert.equal(resp.data.orders[0].customer.firstname, mockup.orders[0].customer.firstname);
+                        assert.equal(resp.data.orders[0].customer.lastname, mockup.orders[0].customer.lastname);
+                        assert.equal(resp.data.orders[0].customer.tel, mockup.orders[0].customer.tel);
+                        assert.equal(resp.data.orders[0].customer.address.houseno, mockup.orders[0].customer.address.houseno);
+                        assert.equal(resp.data.orders[0].customer.address.village, mockup.orders[0].customer.address.village);
+                        assert.equal(resp.data.orders[0].customer.address.street, mockup.orders[0].customer.address.street);
+                        assert.equal(resp.data.orders[0].customer.address.subdistrict, mockup.orders[0].customer.address.subdistrict);
+                        assert.equal(resp.data.orders[0].customer.address.district, mockup.orders[0].customer.address.district);
+                        assert.equal(resp.data.orders[0].customer.address.province, mockup.orders[0].customer.address.province);
+                        assert.equal(resp.data.orders[0].customer.address.zipcode, mockup.orders[0].customer.address.zipcode);
+                        assert.equal(resp.data.orders[0].items[0].name, mockup.orders[0].items[0].name);
+                        assert.equal(resp.data.orders[0].items[0].option[0].name, mockup.orders[0].items[0].option[0].name);
+                        assert.equal(resp.data.orders[0].items[0].option[0].value[0].name, mockup.orders[0].items[0].option[0].value[0].name);
+                        assert.equal(resp.data.orders[0].items[0].option[0].value[0].qty, mockup.orders[0].items[0].option[0].value[0].qty);
+                        assert.equal(resp.data.orders[0].items[0].price, mockup.orders[0].items[0].price);
+                        assert.equal(resp.data.orders[0].items[0].amount, mockup.orders[0].items[0].amount);
+                        assert.equal(resp.data.orders[0].totalamount, mockup.orders[0].totalamount);
+                        assert.equal(resp.data.logs.remark, mockup.logs.remark);
                         done();
                     });
             });
