@@ -1,13 +1,13 @@
 'use strict';
 var mongoose = require('mongoose'),
-    model = require('../models/model'), 
+    model = require('../models/model'),
     mq = require('../../core/controllers/rabbitmq'),
     Monitor = mongoose.model('Monitor'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
     _ = require('lodash');
-    
+
 exports.getList = function (req, res) {
-        Monitor.find(function (err, datas) {
+    Monitor.find(function (err, datas) {
         if (err) {
             return res.status(400).send({
                 status: 400,
@@ -23,9 +23,9 @@ exports.getList = function (req, res) {
 };
 
 exports.create = function (req, res) {
-        var newMonitor = new Monitor(req.body);
-        newMonitor.createby = req.user;
-        newMonitor.save(function (err, data) {
+    var newMonitor = new Monitor(req.body);
+    newMonitor.createby = req.user;
+    newMonitor.save(function (err, data) {
         if (err) {
             return res.status(400).send({
                 status: 400,
@@ -107,3 +107,60 @@ exports.delete = function (req, res) {
         };
     });
 };
+
+exports.getReport = function (req, res) {
+    var orderTeam = req.data
+    console.log(orderTeam)
+
+    let i = 0;
+    var productData = []
+    var qty = 0;
+    for (i = 0; i < orderTeam.orders.length; i++) {
+        var order = orderTeam.orders[i];
+        for (let j = 0; j < order.items.length; j++) {
+            var item = order.items[j];
+            var result = productData.findIndex(function (data1) {
+                // console.log('findindex' + data1.name);
+                return item.name === data1.name
+            })
+            productData.push()
+            if (result === -1) {
+                productData.push({ name: item.name });
+            }
+            for (let k = 0; k < item.option.length; k++) {
+                var option = item.option[k];
+                for (let m = 0; m < option.value.length; m++) {
+                    var value = option.value[m];
+                    for (let n = 0; n < productData.length; n++) {
+                        var prodData = productData[n];
+                        if (prodData.name === item.name) {
+                            qty = qty + value.qty
+                            productData.push({qty: qty})
+                            
+                        }
+                    }
+
+                    
+                }
+            }
+        }
+    }
+    console.log(productData);
+
+    req.resualt = {
+        teamname: orderTeam.team.teamname,
+        reportall: {
+            items: [{
+                name: "name",
+                qty: 20,
+                price: 200
+            }],
+            totalprice: 200,
+            totalqty: 20
+        }
+    }
+    res.jsonp({
+        status: 200,
+        data: req.resualt
+    });
+}
