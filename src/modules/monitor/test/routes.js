@@ -50,6 +50,20 @@ describe('Monitor CRUD routes tests', function () {
                         ],
                         price: 100,
                         amount: 200
+                    },
+                    {
+                        name: 'ปัดขนตา',
+                        option: [
+                            {
+                                name: 'เบอร์',
+                                value: [{
+                                    name: '#02',
+                                    qty: 8,
+                                }],
+                            }
+                        ],
+                        price: 150,
+                        amount: 1200
                     }
                 ],
                 totalamount: 200,
@@ -57,7 +71,59 @@ describe('Monitor CRUD routes tests', function () {
                 {
                     name: "ปลายทาง"
                 }
-            }],
+            },
+            {
+                customer: {
+                    firstname: 'Nutshapon',
+                    lastname: 'Lertlaosakun',
+                    tel: '025337172',
+                    address: {
+                        houseno: "55/7",
+                        village: "casa-city",
+                        street: "lumlukka Road",
+                        subdistrict: "บึงคำพร้อย",
+                        district: "lumlukka",
+                        province: "phathumthani",
+                        zipcode: "12150"
+                    }
+                },
+                items: [
+                    {
+                        name: 'ลิปติก',
+                        option: [
+                            {
+                                name: 'สี',
+                                value: [{
+                                    name: '#01',
+                                    qty: 2,
+                                }],
+                            }
+                        ],
+                        price: 100,
+                        amount: 200
+                    },
+                    {
+                        name: 'ปัดขนตา',
+                        option: [
+                            {
+                                name: 'เบอร์',
+                                value: [{
+                                    name: '#02',
+                                    qty: 8,
+                                }],
+                            }
+                        ],
+                        price: 150,
+                        amount: 1200
+                    }
+                ],
+                totalamount: 200,
+                paymenttype:
+                {
+                    name: "ปลายทาง"
+                }
+            }
+        ],
             logs: [{
                 remark: "print Again"
             }]
@@ -496,6 +562,36 @@ describe('Monitor CRUD routes tests', function () {
             });
 
     })
+
+    it('should be Monitor get by id', function (done) {
+
+        request(app)
+            .post('/api/monitors')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockup)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                // console.log(resp.data.orders[0]._id)
+                // console.log(resp.data.orders[1]._id)
+                request(app)
+                    .get('/api/monitor/labels/' + resp.data.orders[0]._id)
+                    .set('Authorization', 'Bearer ' + token)
+                    .expect(200)
+                    .end(function (err, res) {
+                        if (err) {
+                            return done(err);
+                        }
+                        var resp = res.body;
+                
+                        done();
+                    });
+            });
+
+    });
 
     afterEach(function (done) {
         Monitor.remove().exec(done);

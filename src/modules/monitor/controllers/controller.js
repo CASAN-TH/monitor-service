@@ -210,3 +210,81 @@ exports.returnData = function (req, res) {
         data: req.report
     });
 }
+
+exports.getProductLabel = function (req, res, next, id) {
+    console.log(req.dataid)
+    console.log(req.data)
+
+    // req.data.findById(,function (err,data) {
+
+    // })
+
+    // let i = 0;
+    // let j = 0;
+    // let k = 0;
+    // let m = 0;
+    // var productData = [];
+    // for (i = 0; i < req.data.orders.length; i++) {
+    //     var order = req.data.orders[i];
+    //     for (j = 0; j < order.items.length; j++) {
+    //         var item = order.items[j];
+    //         var result = productData.findIndex(function (data1) {
+    //             return item.name === data1.name
+    //         })
+
+    //         for (k = 0; k < item.option.length; k++) {
+    //             var option = item.option[k];
+    //             for (m = 0; m < option.value.length; m++) {
+    //                 var value = option.value[m];
+
+    //                 if (result === -1) {
+    //                     productData.push({ name: item.name, qty: value.qty });
+    //                 }
+    //                 if (result !== -1) {
+    //                     var qtyData = productData[result].qty + value.qty
+    //                     productData[result].qty = qtyData
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    // console.log(productData)
+    next();
+}
+
+exports.getMonitorByOrder = function (req, res, next, id) {
+    console.log(id)
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).send({
+            status: 400,
+            message: 'Id is invalid'
+        });
+    }
+
+    Monitor.find({ "orders._id": id }, function (err, data) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            req.data = data ? data : {};
+            // console.log(req.data)
+            req.data.forEach(element => {
+                // console.log(element.orders)
+                var b;
+                var a = element.orders.filter(function (params) {
+                    console.log(params._id)
+                    if (params._id.toString() === id.toString()) {
+                        console.log('object')
+                        b = params;
+                    }
+                })
+                // console.log(a)
+                // console.log(b)
+            });
+
+            next();
+        };
+    });
+}

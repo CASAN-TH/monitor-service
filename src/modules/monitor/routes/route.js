@@ -21,7 +21,14 @@ module.exports = function (app) {
             controller.returnData
             )
 
+    app.route('/api/monitor/labels/:orderid')
+        .get(
+            controller.getProductLabel,
+            controller.returnData
+        )        
+
     app.param('monitorId', controller.getByID);
+    app.param('orderid',controller.getMonitorByOrder)
 
     /**
      * Message Queue
