@@ -5,9 +5,120 @@ var Schema = mongoose.Schema;
 
 
 var MonitorSchema = new Schema({
-    name: {
+    totalorderamount: {
+        type: Number
+    },
+    status: {
         type: String,
-        required: 'Please fill a Monitor name',
+        enum: ['waitwithdrawal', 'waitpack', 'waitshipping', 'complete'],
+        default: ['waitwithdrawal']
+    },
+    logs: {
+        type: [
+            {
+                remark: {
+                    type: String
+                }
+            }
+        ]
+    },
+    team: {
+        team_id: {
+            type: String
+        },
+        teamname: {
+            type: String
+        }
+    },
+    orders: {
+        type: [
+            {
+                orderno: {
+                    type: String,
+                },
+                customer: {
+                    firstname: {
+                        type: String
+                    },
+                    lastname: {
+                        type: String
+                    },
+                    tel: {
+                        type: String
+                    },
+                    address: {
+                        houseno: {
+                            type: String
+                        },
+                        village: {
+                            type: String
+                        },
+                        street: {
+                            type: String
+                        },
+                        subdistrict: {
+                            type: String
+                        },
+                        district: {
+                            type: String
+                        },
+                        province: {
+                            type: String
+                        },
+                        zipcode: {
+                            type: String
+                        }
+                    },
+                },
+                items: {
+                    type: [
+                        {
+                            name: {
+                                type: String
+                            },
+                            option: {
+                                type: [
+                                    {
+                                        name: {
+                                            type: String
+                                        },
+                                        value: {
+                                            type: [
+                                                {
+                                                    name: {
+                                                        type: String
+                                                    },
+                                                    qty: {
+                                                        type: Number
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                    }
+                                ]
+                            },
+                            price: {
+                                type: Number
+                            },
+                            amount: {
+                                type: Number
+                            }
+                        }
+                    ]
+                },
+                totalamount: {
+                    type: Number
+                },
+                user_id: {
+                    type: String
+                },
+                paymenttype: {
+                    name: {
+                        type: String
+                    }
+                }
+            }
+        ]
     },
     created: {
         type: Date,
