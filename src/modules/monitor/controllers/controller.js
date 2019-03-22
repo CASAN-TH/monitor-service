@@ -121,7 +121,7 @@ exports.getReport = function (req, res, next) {
         for (let j = 0; j < order.items.length; j++) {
             var item = order.items[j];
             var result = productData.findIndex(function (data1) {
-                return item.name === data1.name
+                return item.name.toString() === data1.name.toString()
             })
 
             totalprice = totalprice + item.amount
@@ -200,6 +200,11 @@ exports.reportDetailData = function (req, res, next) {
     if (reportall && reportDetail) {
         reportall.reportDetail = reportDetail
         req.report = reportall
+        console.log(req.report);
+        console.log(req.report.reportall);
+        console.log('reportDETAILLLLLLL');
+        console.log(req.report.reportDetail[0]);
+        console.log(req.report.reportDetail[1]);
         next();
     }
 }

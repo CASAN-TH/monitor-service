@@ -563,7 +563,7 @@ describe('Monitor CRUD routes tests', function () {
 
     })
 
-    it('should be Monitor get by id', function (done) {
+    xit('should be Monitor get by id', function (done) {
 
         request(app)
             .post('/api/monitors')
