@@ -222,13 +222,16 @@ exports.getProductLabel = function (req, res, next) {
     var productData = [];
     for (j = 0; j < order.items.length; j++) {
         var item = order.items[j];
-        var result = productData.findIndex(function (data1) {
-            return item.name === data1.name
-        })
+        
         for (k = 0; k < item.option.length; k++) {
             var option = item.option[k];
             for (m = 0; m < option.value.length; m++) {
                 var value = option.value[m];
+
+                var result = productData.findIndex(function (data1) {
+                    return item.name === data1.name
+                })
+                
                 if (result === -1) {
                     productData.push({ name: item.name, qty: value.qty });
                 }
@@ -245,6 +248,7 @@ exports.getProductLabel = function (req, res, next) {
         productall: productData
     }
     req.report = label;
+    console.log(req.report)
     next();
 }
 
