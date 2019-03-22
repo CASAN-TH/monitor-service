@@ -218,44 +218,37 @@ exports.returnData = function (req, res) {
 
 exports.getProductLabel = function (req, res, next) {
 
-    // console.log("xxxx  : ",req.order)
     var order = req.order;
 
-
-    let i = 0;
     let j = 0;
     let k = 0;
     let m = 0;
     var productData = [];
-
-        for (j = 0; j < order.items.length; j++) {
-            var item = order.items[j];
-            var result = productData.findIndex(function (data1) {
-                return item.name === data1.name
-            })
-
-            for (k = 0; k < item.option.length; k++) {
-                var option = item.option[k];
-                for (m = 0; m < option.value.length; m++) {
-                    var value = option.value[m];
-
-                    if (result === -1) {
-                        productData.push({ name: item.name, qty: value.qty });
-                    }
-                    if (result !== -1) {
-                        var qtyData = productData[result].qty + value.qty
-                        productData[result].qty = qtyData
-                    }
+    for (j = 0; j < order.items.length; j++) {
+        var item = order.items[j];
+        var result = productData.findIndex(function (data1) {
+            return item.name === data1.name
+        })
+        for (k = 0; k < item.option.length; k++) {
+            var option = item.option[k];
+            for (m = 0; m < option.value.length; m++) {
+                var value = option.value[m];
+                if (result === -1) {
+                    productData.push({ name: item.name, qty: value.qty });
+                }
+                if (result !== -1) {
+                    var qtyData = productData[result].qty + value.qty
+                    productData[result].qty = qtyData
                 }
             }
         }
- 
-    var label = {
-        customer:order.customer,
-        productall:productData
     }
-    console.log(label)
 
+    var label = {
+        customer: order.customer,
+        productall: productData
+    }
+    req.report = label;
     next();
 }
 
@@ -279,17 +272,13 @@ exports.getMonitorByOrder = function (req, res, next, id) {
             var b;
             req.data.forEach(element => {
                 var a = element.orders.filter(function (params) {
-                    // console.log(params._id)
                     if (params._id.toString() === id.toString()) {
                         b = params;
                     }
                 })
-                // console.log(a)
-                // console.log(b)
-                
+
             });
             req.order = b;
-            // console.log(req.order)
             next();
         };
     });
