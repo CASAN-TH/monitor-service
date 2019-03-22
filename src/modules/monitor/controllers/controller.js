@@ -213,7 +213,7 @@ exports.returnData = function (req, res) {
 
 exports.getProductLabel = function (req, res, next) {
 
-    console.log("xxxx  : ",req.order)
+    // console.log("xxxx  : ",req.order)
     var order = req.order;
 
 
@@ -245,7 +245,12 @@ exports.getProductLabel = function (req, res, next) {
             }
         }
  
-    console.log(productData)
+    var label = {
+        customer:order.customer,
+        productall:productData
+    }
+    console.log(label)
+
     next();
 }
 
