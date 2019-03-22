@@ -38,7 +38,7 @@ describe('Monitor CRUD routes tests', function () {
                 },
                 items: [
                     {
-                        name: 'ลิปติก',
+                        name: 'ปัดขนตา',
                         option: [
                             {
                                 name: 'สี',
