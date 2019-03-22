@@ -120,9 +120,6 @@ exports.getReport = function (req, res, next) {
         var order = orderTeam.orders[i];
         for (let j = 0; j < order.items.length; j++) {
             var item = order.items[j];
-            var result = productData.findIndex(function (data1) {
-                return item.name.toString() === data1.name.toString()
-            })
 
             totalprice = totalprice + item.amount
 
@@ -131,6 +128,10 @@ exports.getReport = function (req, res, next) {
                 for (let m = 0; m < option.value.length; m++) {
                     var value = option.value[m];
 
+                    var result = productData.findIndex(function (data1) {
+                        return item.name.toString() === data1.name.toString()
+                    })
+                    
                     if (result === -1) {
                         productData.push({ name: item.name, qty: value.qty, price: item.price });
                     }
@@ -200,11 +201,6 @@ exports.reportDetailData = function (req, res, next) {
     if (reportall && reportDetail) {
         reportall.reportDetail = reportDetail
         req.report = reportall
-        console.log(req.report);
-        console.log(req.report.reportall);
-        console.log('reportDETAILLLLLLL');
-        console.log(req.report.reportDetail[0]);
-        console.log(req.report.reportDetail[1]);
         next();
     }
 }
