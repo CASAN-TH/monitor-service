@@ -670,7 +670,6 @@ describe('Monitor CRUD routes tests', function () {
                             return done(err);
                         }
                         var resp = res.body;
-
                         done();
                     });
             });
