@@ -106,16 +106,20 @@ var MonitorSchema = new Schema({
                         }
                     ]
                 },
-                lables:{
-                    type:[{
-                        trackno:{
-                            type:String
+                labels: {
+                    type: [{
+                        trackno: {
+                            type: String
                         },
-                        firstname:{
-                            type:String
-                        },
-                        lastname:{
-                            type:String
+                        customer: {
+                            type: {
+                                firstname: {
+                                    type: String
+                                },
+                                lastname: {
+                                    type: String
+                                },
+                            }
                         },
                         address: {
                             houseno: {
@@ -140,16 +144,16 @@ var MonitorSchema = new Schema({
                                 type: String
                             }
                         },
-                        productlist:{
-                            type:{
-                                name:{
-                                    type:String
+                        productlist: {
+                            type: {
+                                name: {
+                                    type: String
                                 },
-                                qty:{
-                                    type:String
+                                qty: {
+                                    type: String
                                 }
                             }
-                        }     
+                        }
                     }]
                 },
                 totalamount: {
