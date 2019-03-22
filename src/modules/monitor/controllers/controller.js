@@ -201,6 +201,10 @@ exports.reportDetailData = function (req, res, next) {
         reportall.reportDetail = reportDetail
         req.report = reportall
         console.log(req.report);
+        console.log(req.report.reportall);
+        console.log('reportDETAILLLLLLL');
+        console.log(req.report.reportDetail[0]);
+        console.log(req.report.reportDetail[1]);
         next();
     }
 }
