@@ -1283,7 +1283,7 @@ describe('Monitor CRUD routes tests', function () {
         });
     });
 
-    it('Should be get Graph by member', function (done) {
+    xit('Should be get Graph by member', function (done) {
         var monitor1 = new Monitor({
             "status": "waitwithdrawal",
             "team": {
@@ -1615,7 +1615,7 @@ describe('Monitor CRUD routes tests', function () {
                         }
                     ],
                     "totalamount": 4280,
-                    "user_id": "user001",
+                    "user_id": "user005",
                     "paymenttype": {
                         "name": "ชำระเงินปลายทาง"
                     },

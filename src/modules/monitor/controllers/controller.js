@@ -291,7 +291,7 @@ exports.getProductLabel = function (req, res, next) {
         customer: order.customer,
         productall: productData
     }
-    console.log(label)
+    // console.log(label)
     req.result = label;
     next();
 }
@@ -338,14 +338,28 @@ exports.findMonitorByData = function (req, res, next) {
 
     if (status === "team") {
         Monitor.find({ "team.team_id": dataId, created: { $gte: maxDay, $lte: minDay } }, function (err, data) {
-            req.monitorsData = data;
-            next();
+            if (err) {
+                return res.status(400).send({
+                    status: 400,
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                req.monitorsData = data;
+                next();
+            }
         });
     } else if (status === "member") {
         Monitor.find({ "orders.user_id": dataId, created: { $gte: maxDay, $lte: minDay } }, function (err, data) {
-            req.monitorsData = data;
-            console.log(data);
-            next();
+            if (err) {
+                return res.status(400).send({
+                    status: 400,
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                req.monitorsData = data;
+                // console.log(data);
+                next();
+            }
         });
     } else {
         next();
@@ -379,7 +393,7 @@ exports.solveTotalProduct = function (req, res, next) {
                                 productData[indxTeam].qty = qtyData
                             }
                         } else {
-                        
+
                         }
                     }
                 }
@@ -387,6 +401,6 @@ exports.solveTotalProduct = function (req, res, next) {
         }
     }
     req.result = productData
-    console.log(req.result)
+    // console.log(req.result)
     next();
 }
