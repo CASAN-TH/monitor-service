@@ -219,6 +219,10 @@ exports.getProductLabel = function (req, res, next) {
     let j = 0;
     let k = 0;
     let m = 0;
+    // let q = 0;
+    // let x = 0;
+    // console.log(order)
+
     var productData = [];
     for (j = 0; j < order.items.length; j++) {
         var item = order.items[j];
@@ -243,10 +247,51 @@ exports.getProductLabel = function (req, res, next) {
         }
     }
 
+    var a = [];
+    for (let q = 0; q < order.labels.length; q++) {
+        var labels = order.labels[q];
+        // console.log(labels)
+        for (let x = 0; x < labels.productlist.length; x++) {
+            var prod = labels.productlist[x];
+            // console.log(prod)
+            var index3 = a.findIndex(function (data1) {
+                return prod.name === data1.name
+            })
+            // console.log(index3)
+
+            if (index3 === -1) {
+                a.push({ name: prod.name, qty: prod.qty });
+            }
+            if (index3 !== -1) {
+                var qtyData = a[index3].qty + prod.qty
+                a[index3].qty = qtyData
+            }
+
+        }
+    }
+
+    for (let u = 0; u < productData.length; u++) {
+        var pro = productData[u];
+
+        var index4 = a.findIndex(function (data4) {
+            return pro.name === data4.name
+        })
+
+        if (index4 >= 0) {
+            var qtysumone = pro.qty - a[index4].qty
+            productData[index4].qtyAll = qtysumone
+        }
+        // console.log(index4)
+    }
+
+    // console.log('A : ', a)
+    // console.log(productData)
+
     var label = {
         customer: order.customer,
         productall: productData
     }
+    console.log(label)
     req.result = label;
     next();
 }
@@ -342,5 +387,6 @@ exports.solveTotalProduct = function (req, res, next) {
         }
     }
     req.result = productData
+    console.log(req.result)
     next();
 }
