@@ -93,7 +93,57 @@ describe('Monitor CRUD routes tests', function () {
                     "paymenttype": {
                         "name": "ชำระเงินปลายทาง"
                     },
-                    "lables": []
+                    "labels": [{
+                        "address" : {
+                            "houseno" : "5/16",
+                            "village" : "",
+                            "street" : "",
+                            "subdistrict" : "สมเด็จเจริญ",
+                            "district" : "หนองปรือ",
+                            "province" : "กาญจนบุรี",
+                            "zipcode" : "71220"
+                        },
+                        "trackno" : "1111",
+                        "customer" : {
+                            "firstname" : "ณัฐพล",
+                            "lastname" : "ใจดี"
+                        },
+                        "productlist" : [
+                            {
+                                "name" : "Powder",
+                                "qty" : 14
+                            },{
+                                "name" : "perfect lip",
+                                "qty" : 10
+                            }
+                        ]
+                    },
+                    {
+                        "address" : {
+                            "houseno" : "5/16",
+                            "village" : "",
+                            "street" : "",
+                            "subdistrict" : "สมเด็จเจริญ",
+                            "district" : "หนองปรือ",
+                            "province" : "กาญจนบุรี",
+                            "zipcode" : "71220"
+                        },
+                        "trackno" : "1111",
+                        "customer" : {
+                            "firstname" : "ณัฐพล",
+                            "lastname" : "ใจดี"
+                        },
+                        "productlist" : [
+                            {
+                                "name" : "Powder",
+                                "qty" : 18
+                            },{
+                                "name" : "perfect lip",
+                                "qty" : 18
+                            }
+                        ]
+                    }
+                ]
                 },
                 {
                     "customer": {

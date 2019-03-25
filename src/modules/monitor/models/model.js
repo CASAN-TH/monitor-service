@@ -150,7 +150,7 @@ var MonitorSchema = new Schema({
                                     type: String
                                 },
                                 qty: {
-                                    type: String
+                                    type: Number
                                 }
                             }]
                         }
