@@ -1218,7 +1218,7 @@ describe('Monitor CRUD routes tests', function () {
                                 assert.equal(resp.data[1].qty,
                                     monitor1.orders[0].items[1].option[0].value[0].qty + monitor1.orders[0].items[1].option[0].value[1].qty)
                                 assert.equal(resp.data[1].price, monitor1.orders[0].items[1].price)
-                                
+
                                 assert.equal(resp.data[2].name, monitor1.orders[1].items[1].name)
                                 assert.equal(resp.data[2].qty,
                                     monitor1.orders[1].items[1].option[0].value[0].qty + monitor1.orders[1].items[1].option[0].value[1].qty +
@@ -1233,7 +1233,7 @@ describe('Monitor CRUD routes tests', function () {
         });
     });
 
-    xit('Should be get Graph by member', function (done) {
+    it('Should be get Graph by member', function (done) {
         var monitor1 = new Monitor({
             "status": "waitwithdrawal",
             "team": {
@@ -1502,8 +1502,8 @@ describe('Monitor CRUD routes tests', function () {
         var monitor3 = new Monitor({
             "status": "waitwithdrawal",
             "team": {
-                "team_id": "team003",
-                "teamname": "love 03"
+                "team_id": "team001",
+                "teamname": "nutnutLovelove"
             },
             "orders": [
                 {
@@ -1565,7 +1565,7 @@ describe('Monitor CRUD routes tests', function () {
                         }
                     ],
                     "totalamount": 4280,
-                    "user_id": "user005",
+                    "user_id": "user001",
                     "paymenttype": {
                         "name": "ชำระเงินปลายทาง"
                     },
@@ -1625,8 +1625,8 @@ describe('Monitor CRUD routes tests', function () {
         var monitor4 = new Monitor({
             "status": "waitwithdrawal",
             "team": {
-                "team_id": "team004",
-                "teamname": "expireLove"
+                "team_id": "team001",
+                "teamname": "nutnutLovelove"
             },
             "orders": [
                 {
@@ -1734,7 +1734,7 @@ describe('Monitor CRUD routes tests', function () {
                         }
                     ],
                     "totalamount": 25231,
-                    "user_id": "user008",
+                    "user_id": "user001",
                     "paymenttype": {
                         "name": "ชำระเงินปลายทาง"
                     },
@@ -1765,12 +1765,27 @@ describe('Monitor CRUD routes tests', function () {
                                 }
                                 var resp = res.body;
                                 // console.log(resp.data)
+                                assert.equal(resp.data[0].name, monitor1.orders[0].items[0].name)
+                                assert.equal(resp.data[0].qty,
+                                    monitor1.orders[0].items[0].option[0].value[0].qty + monitor1.orders[0].items[0].option[0].value[1].qty +
+                                    monitor4.orders[1].items[0].option[0].value[0].qty + monitor4.orders[1].items[0].option[0].value[1].qty)
+                                assert.equal(resp.data[0].price, monitor1.orders[0].items[0].price)
+
+                                assert.equal(resp.data[1].name, monitor1.orders[0].items[1].name)
+                                assert.equal(resp.data[1].qty, 
+                                    monitor1.orders[0].items[1].option[0].value[0].qty + monitor1.orders[0].items[1].option[0].value[1].qty)
+                                assert.equal(resp.data[1].price, monitor1.orders[0].items[1].price)
+
+                                assert.equal(resp.data[2].name, monitor4.orders[1].items[1].name)
+                                assert.equal(resp.data[2].qty, 
+                                    monitor4.orders[1].items[1].option[0].value[0].qty + monitor4.orders[1].items[1].option[0].value[1].qty)
+                                assert.equal(resp.data[2].price, monitor4.orders[1].items[1].price)
                                 done();
-                            })
-                    })
-                })
-            })
-        })
+                            });
+                    });
+                });
+            });
+        });
     });
 
     afterEach(function (done) {
