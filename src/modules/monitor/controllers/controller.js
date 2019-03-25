@@ -267,7 +267,6 @@ exports.getProductLabel = function (req, res, next) {
                 a[index3].qty = qtyData
             }
 
-            // console.log(a)
         }
     }
 
@@ -334,32 +333,60 @@ exports.findMonitorByData = function (req, res, next) {
     var maxDay = new Date().setDate(new Date().getDate() - reportDay);
     var minDay = new Date();
 
+    var dataId = req.body.data_id;
     var status = req.body.status;
+
     if (status === "team") {
-        var teamid = req.body.data_id;
-        Monitor.find({ "team.team_id": teamid, created: { $gte: maxDay, $lte: minDay } }, function (err, data) {
-            req.teamsData = data;
+        Monitor.find({ "team.team_id": dataId, created: { $gte: maxDay, $lte: minDay } }, function (err, data) {
+            req.monitorsData = data;
             next();
         });
     } else if (status === "member") {
-        console.log('this is memberId');
-        next();
+        Monitor.find({ "orders.user_id": dataId, created: { $gte: maxDay, $lte: minDay } }, function (err, data) {
+            req.monitorsData = data;
+            console.log(data);
+            next();
+        });
     } else {
         next();
     }
 }
 
 exports.solveTotalProduct = function (req, res, next) {
-    var teamsData = req.teamsData;
-    for (let i = 0; i < teamsData.length; i++) {
-        var team = teamsData[i];
+    var status = req.body.status;
+    var monitorsData = req.monitorsData;
+    var productData = [];
+    for (let i = 0; i < monitorsData.length; i++) {
+        var team = monitorsData[i];
         for (let j = 0; j < team.orders.length; j++) {
             var order = team.orders[j];
             for (let k = 0; k < order.items.length; k++) {
                 var item = order.items[k];
-                // console.log(item);
+                for (let m = 0; m < item.option.length; m++) {
+                    var option = item.option[m];
+                    for (let n = 0; n < option.value.length; n++) {
+                        var value = option.value[n];
+
+                        if (status === "team") {
+                            var indxTeam = productData.findIndex(function (data1) {
+                                return item.name.toString() === data1.name.toString()
+                            })
+                            if (indxTeam === -1) {
+                                productData.push({ name: item.name, qty: value.qty, price: item.price });
+                            }
+                            if (indxTeam !== -1) {
+                                var qtyData = productData[indxTeam].qty + value.qty
+                                productData[indxTeam].qty = qtyData
+                            }
+                        } else {
+                        
+                        }
+                    }
+                }
             }
         }
     }
+    req.result = productData
+    console.log(req.result)
     next();
 }
