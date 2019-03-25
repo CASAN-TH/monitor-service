@@ -145,14 +145,14 @@ var MonitorSchema = new Schema({
                             }
                         },
                         productlist: {
-                            type: {
+                            type: [{
                                 name: {
                                     type: String
                                 },
                                 qty: {
                                     type: String
                                 }
-                            }
+                            }]
                         }
                     }]
                 },
