@@ -131,7 +131,7 @@ exports.getReport = function (req, res, next) {
                     var result = productData.findIndex(function (data1) {
                         return item.name.toString() === data1.name.toString()
                     })
-                    
+
                     if (result === -1) {
                         productData.push({ name: item.name, qty: value.qty, price: item.price });
                     }
@@ -200,7 +200,7 @@ exports.reportDetailData = function (req, res, next) {
     }
     if (reportall && reportDetail) {
         reportall.reportDetail = reportDetail
-        req.report = reportall
+        req.result = reportall
         next();
     }
 }
@@ -208,7 +208,7 @@ exports.reportDetailData = function (req, res, next) {
 exports.returnData = function (req, res) {
     res.jsonp({
         status: 200,
-        data: req.report
+        data: req.result ? req.result : "data"
     });
 }
 
@@ -222,7 +222,7 @@ exports.getProductLabel = function (req, res, next) {
     var productData = [];
     for (j = 0; j < order.items.length; j++) {
         var item = order.items[j];
-        
+
         for (k = 0; k < item.option.length; k++) {
             var option = item.option[k];
             for (m = 0; m < option.value.length; m++) {
@@ -231,7 +231,7 @@ exports.getProductLabel = function (req, res, next) {
                 var result = productData.findIndex(function (data1) {
                     return item.name === data1.name
                 })
-                
+
                 if (result === -1) {
                     productData.push({ name: item.name, qty: value.qty });
                 }
@@ -247,8 +247,7 @@ exports.getProductLabel = function (req, res, next) {
         customer: order.customer,
         productall: productData
     }
-    req.report = label;
-    console.log(req.report)
+    req.result = label;
     next();
 }
 
@@ -282,4 +281,39 @@ exports.getMonitorByOrder = function (req, res, next, id) {
             next();
         };
     });
+};
+
+exports.findMonitorByData = function (req, res, next) {
+    var reportDay = req.body.reportDay;
+    var maxDay = new Date().setDate(new Date().getDate() - reportDay);
+    var minDay = new Date();
+
+    var status = req.body.status;
+    if (status === "team") {
+        var teamid = req.body.data_id;
+        Monitor.find({ "team.team_id": teamid, created: { $gte: maxDay, $lte: minDay } }, function (err, data) {
+            req.teamsData = data;
+            next();
+        });
+    } else if (status === "member") {
+        console.log('this is memberId');
+        next();
+    } else {
+        next();
+    }
+}
+
+exports.solveTotalProduct = function (req, res, next) {
+    var teamsData = req.teamsData;
+    for (let i = 0; i < teamsData.length; i++) {
+        var team = teamsData[i];
+        for (let j = 0; j < team.orders.length; j++) {
+            var order = team.orders[j];
+            for (let k = 0; k < order.items.length; k++) {
+                var item = order.items[k];
+                console.log(item);
+            }
+        }
+    }
+    next();
 }
