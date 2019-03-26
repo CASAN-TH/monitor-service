@@ -404,3 +404,77 @@ exports.solveTotalProduct = function (req, res, next) {
     // console.log(req.result)
     next();
 }
+
+exports.findTeamByTypeId = function (req, res, next) {
+    var reportDay = req.body.reportDay;
+    var maxDay = new Date().setDate(new Date().getDate() - reportDay);
+    var minDay = new Date();
+
+    var dataId = req.body.data_id;
+    var status = req.body.status;
+
+    Monitor.find({ "orders.user_id": dataId, created: { $gte: maxDay, $lte: minDay } }, function (err, data) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            req.teamUser = data;
+            next();
+        }
+    });
+};
+
+exports.filterTypeId = function (req, res, next) {
+    var teamUser = req.teamUser;
+    var dataId = req.body.data_id;
+    // console.log(teamUser)
+    var ordersUser = []
+
+    for (let i = 0; i < teamUser.length; i++) {
+        var team = teamUser[i];
+        for (let j = 0; j < team.orders.length; j++) {
+            var order = team.orders[j];
+            if (order.user_id === dataId) {
+                ordersUser.push({ orderUser: order, created: team.created })
+            }
+        }
+    }
+    req.ordersUser = ordersUser;
+    // console.log(req.ordersUser)
+    next();
+}
+
+exports.findAndPushQty = function (req, res, next) {
+    var ordersUser = req.ordersUser;
+    // console.log(ordersUser)
+    var dataName = []
+    var dataQty = [0, 0, 0, 0, 0, 0, 0];
+
+    for (let i = 0; i < ordersUser.length; i++) {
+        var orderUser = ordersUser[i];
+        // console.log(orderUser.created)
+        // console.log(i)
+        for (let j = 0; j < orderUser.orderUser.items.length; j++) {
+            var item = orderUser.orderUser.items[j];
+            // console.log(item.name)
+            for (let k = 0; k < item.option.length; k++) {
+                var option = item.option[k];
+                for (let m = 0; m < option.value.length; m++) {
+                    var value = option.value[m];
+                    // console.log(item.name)
+                    // console.log(value)
+                    var indxName = dataName.findIndex(function (data) {
+                        return item.name === data.productname
+                    });
+                    if (indxName === -1) {
+                        dataName.push({ productname: item.name })
+                    }
+                }
+            }
+        }
+    }
+    console.log(dataName)
+    next();
+}
