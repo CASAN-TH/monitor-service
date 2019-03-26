@@ -108,53 +108,56 @@ exports.delete = function (req, res) {
     });
 };
 
-exports.getReport = function (req, res, next) {
+exports.reportAllData = function (req, res, next) {
     var orderTeam = req.data
     // console.log(orderTeam)
-
-    let i = 0;
     var productData = [];
     var totalprice = 0;
     var totalQty = 0;
-    for (i = 0; i < orderTeam.orders.length; i++) {
+
+    for (let i = 0; i < orderTeam.orders.length; i++) {
         var order = orderTeam.orders[i];
         for (let j = 0; j < order.items.length; j++) {
             var item = order.items[j];
-
             totalprice = totalprice + item.amount
-
+            // console.log(item.name)
+            var indxName = productData.findIndex(function (dataName) {
+                return item.name === dataName.name
+            })
+            if (indxName === -1) {
+                productData.push({ name: item.name, price: item.price })
+            }
             for (let k = 0; k < item.option.length; k++) {
                 var option = item.option[k];
                 for (let m = 0; m < option.value.length; m++) {
                     var value = option.value[m];
-
-                    var result = productData.findIndex(function (data1) {
-                        return item.name.toString() === data1.name.toString()
-                    })
-
-                    if (result === -1) {
-                        productData.push({ name: item.name, qty: value.qty, price: item.price });
-                    }
-                    if (result !== -1) {
-                        var qtyData = productData[result].qty + value.qty
-                        productData[result].qty = qtyData
+                    // console.log(value.name)
+                    var indxNameV2 = productData.findIndex(function (dataName) {
+                        return item.name === dataName.name
+                    });
+                    if (!productData[indxNameV2].type) {
+                        productData[indxNameV2].type = [{ name: value.name, qty: value.qty }]
+                        totalQty += value.qty;
+                        // console.log(productData[indxNameV2]);
+                    } else {
+                        // console.log(value.name + ' ----push รอบ2')
+                        var indxValueName = productData[indxNameV2].type.findIndex(function (dataValueName) {
+                            return value.name === dataValueName.name
+                        })
+                        if (indxValueName === -1) {
+                            productData[indxNameV2].type.push({ name: value.name, qty: value.qty });
+                            totalQty += value.qty;
+                        } else {
+                            productData[indxNameV2].type[indxValueName].qty += value.qty;
+                            totalQty += value.qty;
+                        }
                     }
                 }
             }
         }
     }
 
-    //หา ค่ารวม qty
-    for (let o = 0; o < productData.length; o++) {
-        var prodData = productData[o];
-        totalQty += prodData.qty
-    }
-
-    // console.log(productData);
-    // console.log(totalprice);
-    // console.log(totalQty);
-
-    req.reportall = {
+    req.reportOrder = {
         teamname: orderTeam.team.teamname,
         reportall: {
             items: productData,
@@ -167,7 +170,7 @@ exports.getReport = function (req, res, next) {
 
 exports.reportDetailData = function (req, res, next) {
 
-    var reportall = req.reportall;
+    var reportOrder = req.reportOrder;
     var data = req.data;
     // console.log(data);
     var reportDetail = []
@@ -198,9 +201,9 @@ exports.reportDetailData = function (req, res, next) {
             items: itemsData
         });
     }
-    if (reportall && reportDetail) {
-        reportall.reportDetail = reportDetail
-        req.result = reportall
+    if (reportOrder && reportDetail) {
+        reportOrder.reportDetail = reportDetail
+        req.result = reportOrder
         next();
     }
 }

@@ -94,56 +94,56 @@ describe('Monitor CRUD routes tests', function () {
                         "name": "ชำระเงินปลายทาง"
                     },
                     "labels": [{
-                        "address" : {
-                            "houseno" : "5/16",
-                            "village" : "",
-                            "street" : "",
-                            "subdistrict" : "สมเด็จเจริญ",
-                            "district" : "หนองปรือ",
-                            "province" : "กาญจนบุรี",
-                            "zipcode" : "71220"
+                        "address": {
+                            "houseno": "5/16",
+                            "village": "",
+                            "street": "",
+                            "subdistrict": "สมเด็จเจริญ",
+                            "district": "หนองปรือ",
+                            "province": "กาญจนบุรี",
+                            "zipcode": "71220"
                         },
-                        "trackno" : "1111",
-                        "customer" : {
-                            "firstname" : "ณัฐพล",
-                            "lastname" : "ใจดี"
+                        "trackno": "1111",
+                        "customer": {
+                            "firstname": "ณัฐพล",
+                            "lastname": "ใจดี"
                         },
-                        "productlist" : [
+                        "productlist": [
                             {
-                                "name" : "Powder",
-                                "qty" : 14
-                            },{
-                                "name" : "perfect lip",
-                                "qty" : 10
+                                "name": "Powder",
+                                "qty": 14
+                            }, {
+                                "name": "perfect lip",
+                                "qty": 10
                             }
                         ]
                     },
                     {
-                        "address" : {
-                            "houseno" : "5/16",
-                            "village" : "",
-                            "street" : "",
-                            "subdistrict" : "สมเด็จเจริญ",
-                            "district" : "หนองปรือ",
-                            "province" : "กาญจนบุรี",
-                            "zipcode" : "71220"
+                        "address": {
+                            "houseno": "5/16",
+                            "village": "",
+                            "street": "",
+                            "subdistrict": "สมเด็จเจริญ",
+                            "district": "หนองปรือ",
+                            "province": "กาญจนบุรี",
+                            "zipcode": "71220"
                         },
-                        "trackno" : "1111",
-                        "customer" : {
-                            "firstname" : "ณัฐพล",
-                            "lastname" : "ใจดี"
+                        "trackno": "1111",
+                        "customer": {
+                            "firstname": "ณัฐพล",
+                            "lastname": "ใจดี"
                         },
-                        "productlist" : [
+                        "productlist": [
                             {
-                                "name" : "Powder",
-                                "qty" : 18
-                            },{
-                                "name" : "perfect lip",
-                                "qty" : 18
+                                "name": "Powder",
+                                "qty": 18
+                            }, {
+                                "name": "perfect lip",
+                                "qty": 18
                             }
                         ]
                     }
-                ]
+                    ]
                 },
                 {
                     "customer": {
@@ -604,12 +604,12 @@ describe('Monitor CRUD routes tests', function () {
                                 {
                                     "value": [
                                         {
-                                            "name": "SK02",
+                                            "name": "SK01",
                                             "qty": 56
                                         },
                                         {
                                             "name": "SK03",
-                                            "qty": 56
+                                            "qty": 44
                                         }
                                     ],
                                     "name": "เบอร์"
@@ -617,10 +617,10 @@ describe('Monitor CRUD routes tests', function () {
                             ],
                             "name": "ปัดขนตา",
                             "price": 170,
-                            "amount": 19040
+                            "amount": 17000
                         }
                     ],
-                    "totalamount": 25871,
+                    "totalamount": 23831,
                     "user_id": "5c930138398ab6001962a53b",
                     "paymenttype": {
                         "name": "ชำระเงินปลายทาง"
@@ -628,7 +628,7 @@ describe('Monitor CRUD routes tests', function () {
                     "labels": []
                 }
             ],
-            "totalorderamount": 33721,
+            "totalorderamount": 31681,
             "logs": []
         })
         request(app)
@@ -651,19 +651,26 @@ describe('Monitor CRUD routes tests', function () {
                                 return done(err);
                             }
                             var resp = res.body;
-                            // console.log(mo1)
                             // console.log(resp.data)
                             assert.equal(resp.data.teamname, mo1.team.teamname)
                             assert.equal(resp.data.reportall.items[0].name, mo1.orders[0].items[0].name)
                             assert.equal(resp.data.reportall.items[1].name, mo1.orders[0].items[1].name)
                             assert.equal(resp.data.reportall.items[2].name, mo1.orders[1].items[1].name)
-                            assert.equal(resp.data.reportall.items[0].qty,
-                                mo1.orders[0].items[0].option[0].value[0].qty + mo1.orders[0].items[0].option[0].value[1].qty +
-                                mo1.orders[1].items[0].option[0].value[0].qty + mo1.orders[1].items[0].option[0].value[1].qty)
-                            assert.equal(resp.data.reportall.items[1].qty,
-                                mo1.orders[0].items[1].option[0].value[0].qty + mo1.orders[0].items[1].option[0].value[1].qty)
-                            assert.equal(resp.data.reportall.items[2].qty,
-                                mo1.orders[1].items[1].option[0].value[0].qty + mo1.orders[1].items[1].option[0].value[1].qty)
+                            assert.equal(resp.data.reportall.items[0].type[0].name, mo1.orders[0].items[0].option[0].value[0].name)
+                            assert.equal(resp.data.reportall.items[0].type[0].qty, mo1.orders[0].items[0].option[0].value[0].qty)
+                            assert.equal(resp.data.reportall.items[0].type[1].name, mo1.orders[0].items[0].option[0].value[1].name)
+                            assert.equal(resp.data.reportall.items[0].type[1].qty,
+                                mo1.orders[0].items[0].option[0].value[1].qty + mo1.orders[1].items[0].option[0].value[0].qty)
+                            assert.equal(resp.data.reportall.items[0].type[2].name, mo1.orders[1].items[0].option[0].value[1].name)
+                            assert.equal(resp.data.reportall.items[0].type[2].qty, mo1.orders[1].items[0].option[0].value[1].qty)
+                            assert.equal(resp.data.reportall.items[1].type[0].name, mo1.orders[0].items[1].option[0].value[0].name)
+                            assert.equal(resp.data.reportall.items[1].type[0].qty, mo1.orders[0].items[1].option[0].value[0].qty)
+                            assert.equal(resp.data.reportall.items[1].type[1].name, mo1.orders[0].items[1].option[0].value[1].name)
+                            assert.equal(resp.data.reportall.items[1].type[1].qty, mo1.orders[0].items[1].option[0].value[1].qty)
+                            assert.equal(resp.data.reportall.items[2].type[0].name, mo1.orders[1].items[1].option[0].value[0].name)
+                            assert.equal(resp.data.reportall.items[2].type[0].qty, mo1.orders[1].items[1].option[0].value[0].qty)
+                            assert.equal(resp.data.reportall.items[2].type[1].name, mo1.orders[1].items[1].option[0].value[1].name)
+                            assert.equal(resp.data.reportall.items[2].type[1].qty, mo1.orders[1].items[1].option[0].value[1].qty)
                             assert.equal(resp.data.reportall.items[0].price, mo1.orders[0].items[0].price)
                             assert.equal(resp.data.reportall.items[1].price, mo1.orders[0].items[1].price)
                             assert.equal(resp.data.reportall.items[2].price, mo1.orders[1].items[1].price)
@@ -1822,12 +1829,12 @@ describe('Monitor CRUD routes tests', function () {
                                 assert.equal(resp.data[0].price, monitor1.orders[0].items[0].price)
 
                                 assert.equal(resp.data[1].name, monitor1.orders[0].items[1].name)
-                                assert.equal(resp.data[1].qty, 
+                                assert.equal(resp.data[1].qty,
                                     monitor1.orders[0].items[1].option[0].value[0].qty + monitor1.orders[0].items[1].option[0].value[1].qty)
                                 assert.equal(resp.data[1].price, monitor1.orders[0].items[1].price)
 
                                 assert.equal(resp.data[2].name, monitor4.orders[1].items[1].name)
-                                assert.equal(resp.data[2].qty, 
+                                assert.equal(resp.data[2].qty,
                                     monitor4.orders[1].items[1].option[0].value[0].qty + monitor4.orders[1].items[1].option[0].value[1].qty)
                                 assert.equal(resp.data[2].price, monitor4.orders[1].items[1].price)
                                 done();
