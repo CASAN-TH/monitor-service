@@ -16,7 +16,7 @@ module.exports = function (app) {
 
     app.route('/api/monitor/report/:monitorId')
         .get(
-            controller.getReport,
+            controller.reportAllData,
             controller.reportDetailData,
             controller.returnData
         );
