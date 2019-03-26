@@ -19,20 +19,28 @@ module.exports = function (app) {
             controller.getReport,
             controller.reportDetailData,
             controller.returnData
-        )
+        );
 
     app.route('/api/monitor/labels/:orderid')
         .get(
             controller.getProductLabel,
             controller.returnData
-        )
+        );
 
     app.route('/api/graph/product/')
         .post(
             controller.findMonitorByData,
             controller.solveTotalProduct,
             controller.returnData
-            )
+        );
+
+    app.route('/api/graph/line/')
+        .post(
+            controller.findTeamByTypeId,
+            controller.filterTypeId,
+            controller.findAndPushQty,
+            controller.returnData
+        );
 
     app.param('monitorId', controller.getByID);
     app.param('orderid', controller.getMonitorByOrder);
