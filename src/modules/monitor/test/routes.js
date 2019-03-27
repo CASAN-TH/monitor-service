@@ -733,7 +733,7 @@ describe('Monitor CRUD routes tests', function () {
 
     });
 
-    it('Should be get Graph by team_id', function (done) {
+    it('Should be get Graph product by team_id', function (done) {
         var monitor1 = new Monitor({
             "status": "waitwithdrawal",
             "team": {
@@ -1290,12 +1290,12 @@ describe('Monitor CRUD routes tests', function () {
         });
     });
 
-    xit('Should be get Graph by member', function (done) {
+    it('Should be get Graph product by member', function (done) {
         var monitor1 = new Monitor({
             "status": "waitwithdrawal",
             "team": {
-                "team_id": "team001",
-                "teamname": "nutnutLovelove"
+                "team_id": "team004",
+                "teamname": "nutnut4"
             },
             "orders": [
                 {
@@ -1682,8 +1682,8 @@ describe('Monitor CRUD routes tests', function () {
         var monitor4 = new Monitor({
             "status": "waitwithdrawal",
             "team": {
-                "team_id": "team001",
-                "teamname": "nutnutLovelove"
+                "team_id": "team004",
+                "teamname": "nutnut4"
             },
             "orders": [
                 {

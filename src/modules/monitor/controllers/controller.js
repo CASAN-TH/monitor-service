@@ -373,6 +373,7 @@ exports.solveTotalProduct = function (req, res, next) {
     var status = req.body.status;
     var monitorsData = req.monitorsData;
     var productData = [];
+    var userDataId = req.body.data_id;
     for (let i = 0; i < monitorsData.length; i++) {
         var team = monitorsData[i];
         for (let j = 0; j < team.orders.length; j++) {
@@ -395,8 +396,21 @@ exports.solveTotalProduct = function (req, res, next) {
                                 var qtyData = productData[indxTeam].qty + value.qty
                                 productData[indxTeam].qty = qtyData
                             }
-                        } else {
-
+                        }
+                        if (status === "member") {
+                            if (userDataId === order.user_id) {
+                                // console.log(item.name)
+                                var indxMember = productData.findIndex(function (dataMember) {
+                                    return item.name === dataMember.name;
+                                });
+                                if (indxMember === -1) {
+                                    productData.push({ name: item.name, qty: value.qty, price: item.price });
+                                }
+                                if (indxMember !== -1) {
+                                    var qtyData = productData[indxMember].qty + value.qty
+                                    productData[indxMember].qty = qtyData
+                                }
+                            }
                         }
                     }
                 }
@@ -404,9 +418,8 @@ exports.solveTotalProduct = function (req, res, next) {
         }
     }
     req.result = productData
-    // console.log(req.result)
     next();
-}
+};
 
 exports.findTeamByTypeId = function (req, res, next) {
     var reportDay = req.body.reportDay;
@@ -447,7 +460,7 @@ exports.filterTypeId = function (req, res, next) {
     req.ordersUser = ordersUser;
     // console.log(req.ordersUser)
     next();
-}
+};
 
 exports.findAndPushQty = function (req, res, next) {
     var ordersUser = req.ordersUser;
