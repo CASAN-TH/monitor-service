@@ -66,24 +66,24 @@ exports.getByID = function (req, res, next, id) {
     });
 };
 
-exports.getTeamById = function (req, res, next, id) {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).send({
-            status: 400,
-            message: 'Id is invalid'
-        });
-    }
-    Monitor.find({ "team.team_id": id }, function (err, data) {
-        if (err) {
-            return res.status(400).send({
-                status: 400,
-                message: errorHandler.getErrorMessage(err)
-            });
-        }
-        req.result = data
-        next();
-    });
-};
+// exports.getTeamById = function (req, res, next, id) {
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//         return res.status(400).send({
+//             status: 400,
+//             message: 'Id is invalid'
+//         });
+//     }
+//     Monitor.find({ "team.team_id": id }, function (err, data) {
+//         if (err) {
+//             return res.status(400).send({
+//                 status: 400,
+//                 message: errorHandler.getErrorMessage(err)
+//             });
+//         }
+//         req.result = data
+//         next();
+//     });
+// };
 
 exports.read = function (req, res) {
     res.jsonp({

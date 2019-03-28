@@ -488,7 +488,7 @@ describe('Monitor CRUD routes tests', function () {
 
     });
 
-    it('should be get Data by Team_id', function (done) {
+    xit('should be get Data by Team_id', function (done) {
         request(app)
             .post('/api/monitors')
             .set('Authorization', 'Bearer ' + token)
