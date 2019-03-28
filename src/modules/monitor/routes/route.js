@@ -27,8 +27,7 @@ module.exports = function (app) {
             controller.returnData
         );
 
-    // app.route('/api/monitor/team/:teamId')
-    //     .get(controller.returnData);
+    
 
     app.route('/api/graph/product/')
         .post(
@@ -45,9 +44,12 @@ module.exports = function (app) {
             controller.returnData
         );
 
+    app.route('/api/monitor/team/:teamid')
+        .get(controller.returnData);
+
     app.param('monitorId', controller.getByID);
     app.param('orderid', controller.getMonitorByOrder);
-    // app.param('teamId', controller.getTeamById)
+    app.param('teamid', controller.getTeamById)
 
     /**
      * Message Queue
