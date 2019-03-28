@@ -66,6 +66,25 @@ exports.getByID = function (req, res, next, id) {
     });
 };
 
+exports.getTeamById = function (req, res, next, id) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).send({
+            status: 400,
+            message: 'Id is invalid'
+        });
+    }
+    Monitor.find({ "team.team_id": id }, function (err, data) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+        req.result = data
+        next();
+    });
+};
+
 exports.read = function (req, res) {
     res.jsonp({
         status: 200,
@@ -459,24 +478,24 @@ exports.filterTypeId = function (req, res, next) {
         for (let j = 0; j < teamUser.orders.length; j++) {
             var order = teamUser.orders[j];
             // console.log(order.user_id)
-            
+
             for (let k = 0; k < order.items.length; k++) {
                 var item = order.items[k];
                 // console.log(item.name)
                 var indxOrdUser = ordersUser.findIndex(function (dataOrdUser) {
                     return item.name === dataOrdUser
                 })
-                if(indxOrdUser === -1){
-                    ordersUser.push({name: item.name})
+                if (indxOrdUser === -1) {
+                    ordersUser.push({ name: item.name })
                 }
                 console.log(ordersUser)
                 for (let m = 0; m < item.option.length; m++) {
                     var option = item.option[m];
                     for (let n = 0; n < option.value.length; n++) {
                         var value = option.value[n];
-                        if(order.user_id === dataId){
+                        if (order.user_id === dataId) {
                             var indxOrdUser2 = ordersUser.findIndex(function (dataOrdUser) {
-                                return 
+                                return
                             })
                         }
                     }

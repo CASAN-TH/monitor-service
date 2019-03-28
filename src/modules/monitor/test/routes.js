@@ -488,6 +488,322 @@ describe('Monitor CRUD routes tests', function () {
 
     });
 
+    it('should be get Data by Team_id', function (done) {
+        request(app)
+            .post('/api/monitors')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockup)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                var monitor1 = new Monitor({
+                    "status": "waitwithdrawal",
+                    "team": {
+                        "team_id": "team001",
+                        "teamname": "nutnutLovelove1"
+                    },
+                    "orders": [
+                        {
+                            "customer": {
+                                "address": {
+                                    "houseno": "55/7",
+                                    "village": "casa-city",
+                                    "street": "lumlukka Road",
+                                    "subdistrict": "บึงคำพร้อย",
+                                    "district": "lumlukka",
+                                    "province": "phathumthani",
+                                    "zipcode": "12150"
+                                },
+                                "firstname": "nutshapon",
+                                "lastname": "lertlao",
+                                "tel": "0995689456"
+                            },
+
+                            "items": [
+                                {
+                                    "option": [
+                                        {
+                                            "value": [
+                                                {
+                                                    "name": "RL01",
+                                                    "qty": 10
+                                                },
+                                                {
+                                                    "name": "RL02",
+                                                    "qty": 20
+                                                }
+                                            ],
+                                            "name": "สี"
+                                        }
+                                    ],
+                                    "name": "ลิปติก",
+                                    "price": 69,
+                                    "amount": 2070
+                                },
+                                {
+                                    "option": [
+                                        {
+                                            "value": [
+                                                {
+                                                    "name": "SK01",
+                                                    "qty": 12
+                                                },
+                                                {
+                                                    "name": "SK02",
+                                                    "qty": 22
+                                                }
+                                            ],
+                                            "name": "เบอร์"
+                                        }
+                                    ],
+                                    "name": "แป้งตลับ",
+                                    "price": 170,
+                                    "amount": 5780
+                                }
+                            ],
+                            "totalamount": 7850,
+                            "user_id": "user001",
+                            "paymenttype": {
+                                "name": "ชำระเงินปลายทาง"
+                            },
+                            "lables": []
+                        },
+                        {
+                            "customer": {
+                                "address": {
+                                    "houseno": "55/7 test",
+                                    "village": "casa-city test",
+                                    "street": "lumlukka Road test",
+                                    "subdistrict": "บึงคำพร้อย test",
+                                    "district": "lumlukka test",
+                                    "province": "phathumthani test",
+                                    "zipcode": "12150 test"
+                                },
+                                "firstname": "nnn",
+                                "lastname": "lll",
+                                "tel": "4456789789"
+                            },
+
+                            "items": [
+                                {
+                                    "option": [
+                                        {
+                                            "value": [
+                                                {
+                                                    "name": "RL02",
+                                                    "qty": 33
+                                                },
+                                                {
+                                                    "name": "RL03",
+                                                    "qty": 66
+                                                }
+                                            ],
+                                            "name": "สี"
+                                        }
+                                    ],
+                                    "name": "ลิปติก",
+                                    "price": 69,
+                                    "amount": 6831
+                                },
+                                {
+
+                                    "option": [
+                                        {
+                                            "value": [
+                                                {
+                                                    "name": "SK02",
+                                                    "qty": 56
+                                                },
+                                                {
+                                                    "name": "SK03",
+                                                    "qty": 56
+                                                }
+                                            ],
+                                            "name": "เบอร์"
+                                        }
+                                    ],
+                                    "name": "ปัดขนตา",
+                                    "price": 170,
+                                    "amount": 19040
+                                }
+                            ],
+                            "totalamount": 25871,
+                            "user_id": "user002",
+                            "paymenttype": {
+                                "name": "ชำระเงินปลายทาง"
+                            },
+                            "labels": []
+                        }
+                    ],
+                    "totalorderamount": 33721,
+                    "logs": [],
+                    "created": new Date().setDate(new Date().getDate())
+                });
+                var monitor2 = new Monitor({
+                    "status": "waitwithdrawal",
+                    "team": {
+                        "team_id": "team002",
+                        "teamname": "lelouLa"
+                    },
+                    "orders": [
+                        {
+                            "customer": {
+                                "address": {
+                                    "houseno": "55/7",
+                                    "village": "casa-city",
+                                    "street": "lumlukka Road",
+                                    "subdistrict": "บึงคำพร้อย",
+                                    "district": "lumlukka",
+                                    "province": "phathumthani",
+                                    "zipcode": "12150"
+                                },
+                                "firstname": "natsu",
+                                "lastname": "tsutsu",
+                                "tel": "990897895"
+                            },
+
+                            "items": [
+                                {
+                                    "option": [
+                                        {
+                                            "value": [
+                                                {
+                                                    "name": "RL01",
+                                                    "qty": 45
+                                                },
+                                                {
+                                                    "name": "RL02",
+                                                    "qty": 55
+                                                }
+                                            ],
+                                            "name": "สี"
+                                        }
+                                    ],
+                                    "name": "ลิปติก",
+                                    "price": 69,
+                                    "amount": 6900
+                                },
+                                {
+                                    "option": [
+                                        {
+                                            "value": [
+                                                {
+                                                    "name": "SK01",
+                                                    "qty": 22
+                                                },
+                                                {
+                                                    "name": "SK02",
+                                                    "qty": 22
+                                                }
+                                            ],
+                                            "name": "เบอร์"
+                                        }
+                                    ],
+                                    "name": "แป้งตลับ",
+                                    "price": 170,
+                                    "amount": 7480
+                                }
+                            ],
+                            "totalamount": 14380,
+                            "user_id": "user003",
+                            "paymenttype": {
+                                "name": "ชำระเงินปลายทาง"
+                            },
+                            "lables": []
+                        },
+                        {
+                            "customer": {
+                                "address": {
+                                    "houseno": "55/7 test",
+                                    "village": "casa-city test",
+                                    "street": "lumlukka Road test",
+                                    "subdistrict": "บึงคำพร้อย test",
+                                    "district": "lumlukka test",
+                                    "province": "phathumthani test",
+                                    "zipcode": "12150 test"
+                                },
+                                "firstname": "lala",
+                                "lastname": "loulou",
+                                "tel": "5569866986"
+                            },
+
+                            "items": [
+                                {
+                                    "option": [
+                                        {
+                                            "value": [
+                                                {
+                                                    "name": "RL02",
+                                                    "qty": 38
+                                                },
+                                                {
+                                                    "name": "RL03",
+                                                    "qty": 66
+                                                }
+                                            ],
+                                            "name": "สี"
+                                        }
+                                    ],
+                                    "name": "ลิปติก",
+                                    "price": 69,
+                                    "amount": 7176
+                                }
+                            ],
+                            "totalamount": 7176,
+                            "user_id": "user004",
+                            "paymenttype": {
+                                "name": "ชำระเงินปลายทาง"
+                            },
+                            "labels": []
+                        }
+                    ],
+                    "totalorderamount": 21556,
+                    "logs": [],
+                    "created": new Date().setDate(new Date().getDate() - 6)
+                });
+                monitor1.save(function (err, mo1) {
+                    monitor2.save(function (err, mo2) {
+                        request(app)
+                            .get('/api/monitor/team/' + resp.data.team.team_id)
+                            .set('Authorization', 'Bearer ' + token)
+                            .expect(200)
+                            .end(function (err, res) {
+                                if (err) {
+                                    return done(err);
+                                }
+                                var resTeam = res.body;
+                                assert.equal(resTeam.status, 200);
+                                assert.equal(resTeam.data[0].totalorderamount, mockup.totalorderamount);
+                                assert.equal(resTeam.data[0].status, mockup.status);
+                                assert.equal(resTeam.data[0].team.teamname, mockup.team.teamname);
+                                assert.equal(resTeam.data[0].orders[0].customer.firstname, mockup.orders[0].customer.firstname);
+                                assert.equal(resTeam.data[0].orders[0].customer.lastname, mockup.orders[0].customer.lastname);
+                                assert.equal(resTeam.data[0].orders[0].customer.tel, mockup.orders[0].customer.tel);
+                                assert.equal(resTeam.data[0].orders[0].customer.address.houseno, mockup.orders[0].customer.address.houseno);
+                                assert.equal(resTeam.data[0].orders[0].customer.address.village, mockup.orders[0].customer.address.village);
+                                assert.equal(resTeam.data[0].orders[0].customer.address.street, mockup.orders[0].customer.address.street);
+                                assert.equal(resTeam.data[0].orders[0].customer.address.subdistrict, mockup.orders[0].customer.address.subdistrict);
+                                assert.equal(resTeam.data[0].orders[0].customer.address.district, mockup.orders[0].customer.address.district);
+                                assert.equal(resTeam.data[0].orders[0].customer.address.province, mockup.orders[0].customer.address.province);
+                                assert.equal(resTeam.data[0].orders[0].customer.address.zipcode, mockup.orders[0].customer.address.zipcode);
+                                assert.equal(resTeam.data[0].orders[0].items[0].name, mockup.orders[0].items[0].name);
+                                assert.equal(resTeam.data[0].orders[0].items[0].option[0].name, mockup.orders[0].items[0].option[0].name);
+                                assert.equal(resTeam.data[0].orders[0].items[0].option[0].value[0].name, mockup.orders[0].items[0].option[0].value[0].name);
+                                assert.equal(resTeam.data[0].orders[0].items[0].option[0].value[0].qty, mockup.orders[0].items[0].option[0].value[0].qty);
+                                assert.equal(resTeam.data[0].orders[0].items[0].price, mockup.orders[0].items[0].price);
+                                assert.equal(resTeam.data[0].orders[0].items[0].amount, mockup.orders[0].items[0].amount);
+                                assert.equal(resTeam.data[0].orders[0].totalamount, mockup.orders[0].totalamount);
+                                assert.equal(resTeam.data[0].logs.remark, mockup.logs.remark);
+                                done();
+                            });
+                    });
+                });
+            });
+    });
+
     it('This can respones only report', function (done) {
         var monitor1 = new Monitor({
             "status": "waitwithdrawal",
