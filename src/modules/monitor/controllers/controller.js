@@ -367,7 +367,7 @@ exports.findMonitorByData = function (req, res, next) {
     } else {
         next();
     }
-}
+};
 
 exports.solveTotalProduct = function (req, res, next) {
     var status = req.body.status;
@@ -443,54 +443,103 @@ exports.findTeamByTypeId = function (req, res, next) {
 };
 
 exports.filterTypeId = function (req, res, next) {
-    var teamUser = req.teamUser;
+    var reportDay = req.body.reportDay;
+    var calcuDay = new Date().setDate(new Date().getDate() - reportDay);
+    var maxDay = new Date(calcuDay).getDate()
+    var currentDay = new Date().getDate();
+    var teamsUser = req.teamUser;
     var dataId = req.body.data_id;
-    // console.log(teamUser)
-    var ordersUser = []
+    // console.log(teamsUser)
+    var ordersUser = [];
 
-    for (let i = 0; i < teamUser.length; i++) {
-        var team = teamUser[i];
-        for (let j = 0; j < team.orders.length; j++) {
-            var order = team.orders[j];
-            if (order.user_id === dataId) {
-                ordersUser.push({ orderUser: order, created: team.created })
-            }
-        }
-    }
-    req.ordersUser = ordersUser;
-    // console.log(req.ordersUser)
-    next();
-};
-
-exports.findAndPushQty = function (req, res, next) {
-    var ordersUser = req.ordersUser;
-    // console.log(ordersUser)
-    var dataName = []
-    var dataQty = [0, 0, 0, 0, 0, 0, 0];
-
-    for (let i = 0; i < ordersUser.length; i++) {
-        var orderUser = ordersUser[i];
-        // console.log(orderUser.created)
+    for (let i = 0; i < teamsUser.length; i++) {
+        var teamUser = teamsUser[i];
+        var dateOnly = teamUser.created.getDate();
         // console.log(i)
-        for (let j = 0; j < orderUser.orderUser.items.length; j++) {
-            var item = orderUser.orderUser.items[j];
-            // console.log(item.name)
-            for (let k = 0; k < item.option.length; k++) {
-                var option = item.option[k];
-                for (let m = 0; m < option.value.length; m++) {
-                    var value = option.value[m];
-                    // console.log(item.name)
-                    // console.log(value)
-                    var indxName = dataName.findIndex(function (data) {
-                        return item.name === data.productname
-                    });
-                    if (indxName === -1) {
-                        dataName.push({ productname: item.name })
+        for (let j = 0; j < teamUser.orders.length; j++) {
+            var order = teamUser.orders[j];
+            // console.log(order.user_id)
+            
+            for (let k = 0; k < order.items.length; k++) {
+                var item = order.items[k];
+                // console.log(item.name)
+                var indxOrdUser = ordersUser.findIndex(function (dataOrdUser) {
+                    return item.name === dataOrdUser
+                })
+                if(indxOrdUser === -1){
+                    ordersUser.push({name: item.name})
+                }
+                console.log(ordersUser)
+                for (let m = 0; m < item.option.length; m++) {
+                    var option = item.option[m];
+                    for (let n = 0; n < option.value.length; n++) {
+                        var value = option.value[n];
+                        if(order.user_id === dataId){
+                            var indxOrdUser2 = ordersUser.findIndex(function (dataOrdUser) {
+                                return 
+                            })
+                        }
                     }
                 }
             }
         }
     }
-    console.log(dataName)
+    // var aaa = [0, 0, 0, 0, 0, 0, 0]
+    // // console.log(dateTest)
+
+    // for (let z = 0; z < dateTest.length; z++) {
+    //     var max2Day = maxDay
+    //     var dateSingle = dateTest[z];
+    //     // console.log(dateSingle)
+    //     // console.log('-----------')
+    //     for (let p = 0; p < reportDay; p++) {
+    //         max2Day += 1
+    //         // console.log(max2Day)
+    //         if (max2Day === dateSingle) {
+    //             aaa[p] = 5
+    //         }
+    //     }
+    // }
+    // console.log(aaa)
+
+
+    // if (order.user_id === dataId) {
+    //     ordersUser.push({ orderUser: order, created: team.created })
+    // }
+    // req.ordersUser = ordersUser;
+    // console.log(req.ordersUser)
+    next();
+};
+
+exports.findAndPushQty = function (req, res, next) {
+    // var ordersUser = req.ordersUser;
+    // // console.log(ordersUser)
+    // var dataName = []
+    // var dataQty = [0, 0, 0, 0, 0, 0, 0];
+
+    // for (let i = 0; i < ordersUser.length; i++) {
+    //     var orderUser = ordersUser[i];
+    //     // console.log(orderUser.created)
+    //     // console.log(i)
+    //     for (let j = 0; j < orderUser.orderUser.items.length; j++) {
+    //         var item = orderUser.orderUser.items[j];
+    //         // console.log(item.name)
+    //         for (let k = 0; k < item.option.length; k++) {
+    //             var option = item.option[k];
+    //             for (let m = 0; m < option.value.length; m++) {
+    //                 var value = option.value[m];
+    //                 // console.log(item.name)
+    //                 // console.log(value)
+    //                 var indxName = dataName.findIndex(function (data) {
+    //                     return item.name === data.productname
+    //                 });
+    //                 if (indxName === -1) {
+    //                     dataName.push({ productname: item.name })
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    // console.log(dataName)
     next();
 }
