@@ -22,6 +22,22 @@ exports.getList = function (req, res) {
     });
 };
 
+exports.generateMonitorNo = function (req, res, next) {
+    if (req.body) {
+        var newDate = new Date();
+        req.newDate = newDate;
+        var textDate = newDate.getFullYear().toString().substr(2, 2) + ((newDate.getMonth() + 1) < 10 ? '0' : '') + (newDate.getMonth() + 1).toString() + newDate.getDate().toString();
+        var codeteam = req.body.team.codeteam
+        req.body.monitorno = codeteam + textDate
+        next();
+    } else {
+        return res.status(400).send({
+            status: 400,
+            message: 'Order not found.'
+        });
+    }
+};
+
 exports.create = function (req, res) {
     var newMonitor = new Monitor(req.body);
     newMonitor.createby = req.user;
