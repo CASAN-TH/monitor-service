@@ -19,7 +19,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "5c9301aec22eca001938db0b",
-                "teamname": "Lovelove"
+                "teamname": "Lovelove",
+                "codeteam": "LVD"
             },
             "orders": [
                 {
@@ -494,7 +495,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team001",
-                "teamname": "nutnutLovelove1"
+                "teamname": "nutnutLovelove1",
+                "codeteam": "NLV1"
             },
             "orders": [
                 {
@@ -637,7 +639,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team002",
-                "teamname": "lelouLa"
+                "teamname": "lelouLa",
+                "codeteam": "LEL"
             },
             "orders": [
                 {
@@ -811,7 +814,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "5c9301aec22eca001938db0b",
-                "teamname": "nutnutLovelove"
+                "teamname": "nutnutLovelove",
+                "codeteam": "NLV"
             },
             "orders": [
                 {
@@ -1056,7 +1060,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team001",
-                "teamname": "nutnutLovelove"
+                "teamname": "nutnutLovelove",
+                "codeteam": "NLV"
             },
             "orders": [
                 {
@@ -1199,7 +1204,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team002",
-                "teamname": "lelouLa"
+                "teamname": "lelouLa",
+                "codeteam": "LEL"
             },
             "orders": [
                 {
@@ -1321,7 +1327,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team003",
-                "teamname": "love 03"
+                "teamname": "love 03",
+                "codeteam": "LV3"
             },
             "orders": [
                 {
@@ -1444,7 +1451,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team001",
-                "teamname": "nutnutLovelove"
+                "teamname": "nutnutLovelove",
+                "codeteam": "NLV"
             },
             "orders": [
                 {
@@ -1613,7 +1621,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team004",
-                "teamname": "nutnut4"
+                "teamname": "nutnut4",
+                "codeteam": "NUT4"
             },
             "orders": [
                 {
@@ -1756,7 +1765,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team002",
-                "teamname": "lelouLa"
+                "teamname": "lelouLa",
+                "codeteam": "LEL"
             },
             "orders": [
                 {
@@ -1878,7 +1888,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team001",
-                "teamname": "nutnutLovelove"
+                "teamname": "nutnutLovelove",
+                "codeteam": "NLV"
             },
             "orders": [
                 {
@@ -2001,7 +2012,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team004",
-                "teamname": "nutnut4"
+                "teamname": "nutnut4",
+                "codeteam": "NUT4"
             },
             "orders": [
                 {
@@ -2168,7 +2180,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team001",
-                "teamname": "nutnutLovelove1"
+                "teamname": "nutnutLovelove1",
+                "codeteam": "NLV1"
             },
             "orders": [
                 {
@@ -2311,7 +2324,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team002",
-                "teamname": "lelouLa"
+                "teamname": "lelouLa",
+                "codeteam": "LEL"
             },
             "orders": [
                 {
@@ -2433,7 +2447,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team003",
-                "teamname": "love 03"
+                "teamname": "love 03",
+                "codeteam": "LV03"
             },
             "orders": [
                 {
@@ -2556,7 +2571,8 @@ describe('Monitor CRUD routes tests', function () {
             "status": "waitwithdrawal",
             "team": {
                 "team_id": "team001",
-                "teamname": "nutnutLovelove4"
+                "teamname": "nutnutLovelove4",
+                "codeteam": "NUT4"
             },
             "orders": [
                 {

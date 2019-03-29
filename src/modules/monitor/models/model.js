@@ -8,6 +8,9 @@ var MonitorSchema = new Schema({
     totalorderamount: {
         type: Number
     },
+    monitorno: {
+        type: String
+    },
     status: {
         type: String,
         enum: ['waitwithdrawal', 'waitpack', 'waitshipping', 'complete'],
@@ -27,6 +30,9 @@ var MonitorSchema = new Schema({
             type: String
         },
         teamname: {
+            type: String
+        },
+        codeteam: {
             type: String
         }
     },
