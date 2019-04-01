@@ -310,6 +310,7 @@ exports.getProductLabel = function (req, res, next) {
         }
     }
 
+    var sumqty = 0;
     for (let u = 0; u < productData.length; u++) {
         var pro = productData[u];
 
@@ -321,17 +322,25 @@ exports.getProductLabel = function (req, res, next) {
             var qtysumone = pro.qty - a[index4].qty
             productData[index4].qtyAll = qtysumone
         }
-        // console.log(index4)
     }
+
+
+    // console.log(sumqty)
 
     // console.log('A : ', a)
     // console.log(productData)
 
+    for (let w = 0; w < productData.length; w++) {
+        sumqty += productData[w].qty;
+
+    }
+
     var label = {
         customer: order.customer,
-        productall: productData
+        productall: productData,
+        sumqty: sumqty
     }
-    // console.log(label)
+    console.log(label)
     req.result = label;
     next();
 }
