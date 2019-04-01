@@ -7,7 +7,10 @@ module.exports = function (app) {
     var urlWithParam = '/api/monitors/:monitorId';
     app.route(url).all(policy.isAllowed)
         .get(controller.getList)
-        .post(controller.create);
+        .post(
+            controller.generateMonitorNo,
+            controller.create
+        );
 
     app.route(urlWithParam).all(policy.isAllowed)
         .get(controller.read)
@@ -27,7 +30,7 @@ module.exports = function (app) {
             controller.returnData
         );
 
-    
+
 
     app.route('/api/graph/product/')
         .post(
