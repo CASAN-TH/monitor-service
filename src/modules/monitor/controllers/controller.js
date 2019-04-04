@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
     model = require('../models/model'),
     mq = require('../../core/controllers/rabbitmq'),
     Monitor = mongoose.model('Monitor'),
+    request = require('request'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
     _ = require('lodash');
 
@@ -588,4 +589,21 @@ exports.findAndPushQty = function (req, res, next) {
     // }
     // console.log(dataName)
     next();
+}
+
+exports.reportjs = function (req, res) {
+    var report = req.result;
+    var data = {
+        template: { 'shortid': 'H1xD10Pwu4' },
+        data: report,
+        options: {
+            preview: true
+        }
+    }
+    var options = {
+        uri: 'http://13.250.98.127/api/report',
+        method: 'POST',
+        json: data
+    }
+    request(options).pipe(res);
 }

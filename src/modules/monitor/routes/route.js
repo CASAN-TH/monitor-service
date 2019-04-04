@@ -50,6 +50,13 @@ module.exports = function (app) {
     app.route('/api/monitor/team/:teamid')
         .get(controller.returnData);
 
+    app.route('/api/order/report/:monitorId')
+        .get(
+            controller.reportAllData,
+            controller.reportDetailData,
+            controller.reportjs
+            );
+
     app.param('monitorId', controller.getByID);
     app.param('orderid', controller.getMonitorByOrder);
     app.param('teamid', controller.getTeamById)
