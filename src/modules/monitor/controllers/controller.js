@@ -623,7 +623,9 @@ exports.reportlable = function (req, res) {
         report.labels[z].customer.paymenttype = report.paymenttype;
     }
 
-    var reportorder = report.labels;
+    var reportorder = {
+        labels: report.labels
+    };
 
     var data = {
         template: { 'shortid': 'Syi8NVVKV' },
