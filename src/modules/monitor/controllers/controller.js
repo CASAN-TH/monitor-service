@@ -376,6 +376,9 @@ exports.getMonitorByOrder = function (req, res, next, id) {
             });
             req.order = b;
             console.log(req.order)
+
+
+
             next();
         };
     });
@@ -614,11 +617,15 @@ exports.reportjs = function (req, res) {
 exports.reportlable = function (req, res) {
 
     var report = req.order;
-    var reportorder = {
-        customer: report.customer,
-        labels: report.labels,
-        paymenttype: report.paymenttype
+
+    for (let z = 0; z < report.labels.length; z++) {
+        report.labels[z].customer.tel = report.customer.tel;
+        report.labels[z].customer.paymenttype = report.paymenttype;
     }
+
+    var reportorder = {
+        labels: report.labels
+    };
 
     var data = {
         template: { 'shortid': 'Syi8NVVKV' },
