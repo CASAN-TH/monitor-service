@@ -342,7 +342,9 @@ exports.getProductLabel = function (req, res, next) {
         sumqty: sumqty
     }
     // console.log(label)
+
     req.result = label;
+
     next();
 }
 
@@ -373,7 +375,7 @@ exports.getMonitorByOrder = function (req, res, next, id) {
 
             });
             req.order = b;
-            // console.log(req.order)
+            console.log(req.order)
             next();
         };
     });
@@ -610,13 +612,17 @@ exports.reportjs = function (req, res) {
 }
 
 exports.reportlable = function (req, res) {
+
     var report = req.order;
-    var reportlables = report.labels;
+    var reportorder = {
+        customer: report.customer,
+        labels: report.labels,
+        paymenttype: report.paymenttype
+    }
+
     var data = {
         template: { 'shortid': 'Syi8NVVKV' },
-        data: {
-            datareportlabels: reportlables
-        },
+        data: reportorder,
         options: {
             preview: true
         }
