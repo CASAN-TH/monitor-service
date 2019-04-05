@@ -517,7 +517,7 @@ exports.filterTypeId = function (req, res, next) {
                 if (indxOrdUser === -1) {
                     ordersUser.push({ name: item.name })
                 }
-               // console.log(ordersUser)
+                // console.log(ordersUser)
                 for (let m = 0; m < item.option.length; m++) {
                     var option = item.option[m];
                     for (let n = 0; n < option.value.length; n++) {
@@ -609,12 +609,14 @@ exports.reportjs = function (req, res) {
     request(options).pipe(res);
 }
 
-exports.reportlable = function (req,res) {
+exports.reportlable = function (req, res) {
     var report = req.order;
     var reportlables = report.labels;
     var data = {
         template: { 'shortid': 'Syi8NVVKV' },
-        data: reportlables,
+        data: {
+            datareportlabels: reportlables
+        },
         options: {
             preview: true
         }
