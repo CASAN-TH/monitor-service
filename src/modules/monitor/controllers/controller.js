@@ -341,7 +341,7 @@ exports.getProductLabel = function (req, res, next) {
         productall: productData,
         sumqty: sumqty
     }
-    console.log(label)
+    // console.log(label)
     req.result = label;
     next();
 }
@@ -373,6 +373,7 @@ exports.getMonitorByOrder = function (req, res, next, id) {
 
             });
             req.order = b;
+            // console.log(req.order)
             next();
         };
     });
@@ -516,7 +517,7 @@ exports.filterTypeId = function (req, res, next) {
                 if (indxOrdUser === -1) {
                     ordersUser.push({ name: item.name })
                 }
-                console.log(ordersUser)
+               // console.log(ordersUser)
                 for (let m = 0; m < item.option.length; m++) {
                     var option = item.option[m];
                     for (let n = 0; n < option.value.length; n++) {
@@ -596,6 +597,24 @@ exports.reportjs = function (req, res) {
     var data = {
         template: { 'shortid': 'H1xD10Pwu4' },
         data: report,
+        options: {
+            preview: true
+        }
+    }
+    var options = {
+        uri: 'http://13.250.98.127/api/report',
+        method: 'POST',
+        json: data
+    }
+    request(options).pipe(res);
+}
+
+exports.reportlable = function (req,res) {
+    var report = req.order;
+    var reportlables = report.labels;
+    var data = {
+        template: { 'shortid': 'Syi8NVVKV' },
+        data: reportlables,
         options: {
             preview: true
         }
