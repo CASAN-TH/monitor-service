@@ -283,7 +283,8 @@ exports.reportDetailData = function (req, res, next) {
 
     var date = new Date();
     var dateday = date.getDate().toString()+'/'+date.getMonth().toString()+'/'+date.getFullYear();
-    var time = date.getTime().toString();
+    var time = date.getHours().toString()+':'+date.getMinutes().toString();
+    // console.log(time)
     var datetime = {
         date:dateday,
         time:time
