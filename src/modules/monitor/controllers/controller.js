@@ -253,10 +253,10 @@ exports.reportDetailData = function (req, res, next) {
                 }
 
                 itemsData.push({ name: displayName, value: valueData })
-     
+
             }
         }
-   
+
         //ไว้ตรงนี้เพราะจะ push ตาม order
         reportDetail.push({
             customer: {
@@ -265,7 +265,7 @@ exports.reportDetailData = function (req, res, next) {
             },
             items: itemsData
         });
-     
+
     }
     for (let g = 0; g < reportDetail.length; g++) {
         var reportDe = reportDetail[g].items;
@@ -278,19 +278,24 @@ exports.reportDetailData = function (req, res, next) {
                 reportDeqtycus.qtycus += val.qty
             }
         }
-        
+
     }
 
     var date = new Date();
-    var dateday = date.getDate().toString()+'/'+date.getMonth().toString()+'/'+date.getFullYear();
-    var time = pad(date.getHours(),2) +':'+ pad(date.getMinutes(),2);
+    var dateday = date.getDate().toString() + '/' + date.getMonth().toString() + '/' + date.getFullYear();
+    var time = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
     // console.log(time)
-    var datetime = {
-        date:dateday,
-        time:time
-    }
 
-    var user = req.user;
+    var datetime = {
+        date: dateday,
+        time: time
+    }
+    var userreq = req.user;
+    var user = {
+        firstname: userreq.firstname ? userreq.firstname : 'not firstname',
+        lastname: userreq.lastname ? userreq.lastname : 'not lastname'
+    }
+    console.log(user)
     if (reportOrder && reportDetail) {
         reportOrder.reportDetail = reportDetail;
         reportOrder.user = user;
