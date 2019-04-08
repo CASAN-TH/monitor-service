@@ -22,7 +22,7 @@ var MonitorSchema = new Schema({
     status: {
         type: String,
         enum: ['waitwithdrawal', 'waitpack', 'waitshipping', 'complete'],
-        default: ['waitwithdrawal']
+        default: 'waitwithdrawal'
     },
     logs: {
         type: [
