@@ -2,9 +2,11 @@
 var controller = require('../controllers/controller'),
     mq = require('../../core/controllers/rabbitmq'),
     policy = require('../policy/policy');
+
 module.exports = function (app) {
     var url = '/api/monitors';
     var urlWithParam = '/api/monitors/:monitorId';
+
     app.route(url).all(policy.isAllowed)
         .get(controller.getList)
         .post(
@@ -56,12 +58,11 @@ module.exports = function (app) {
             controller.reportAllData,
             controller.reportDetailData,
             controller.reportjs
-            );
+        );
     app.route('/api/monitor/reportlable/:orderid')
         .get(
             controller.reportlable
-        );        
-
+        );
     app.param('monitorId', controller.getByID);
     app.param('orderid', controller.getMonitorByOrder);
     app.param('teamid', controller.getTeamById)

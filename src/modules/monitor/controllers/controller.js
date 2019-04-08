@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
     _ = require('lodash');
 
+
 exports.getList = function (req, res) {
     Monitor.find(function (err, datas) {
         if (err) {
@@ -70,6 +71,8 @@ exports.create = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
+            var socketio = req.app.get('socketio'); 
+            socketio.sockets.emit('monitor-created', data); 
             res.jsonp({
                 status: 200,
                 data: data
