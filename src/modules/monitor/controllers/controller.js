@@ -248,12 +248,13 @@ exports.reportDetailData = function (req, res, next) {
     }
     for (let g = 0; g < reportDetail.length; g++) {
         var reportDe = reportDetail[g].items;
-        reportDe.qtycus = 0;
+        var reportDeqtycus = reportDetail[g]
+        reportDeqtycus.qtycus = 0;
         for (let r = 0; r < reportDe.length; r++) {
             var item = reportDe[r].value;
             for (let p = 0; p < item.length; p++) {
                 var val = item[p];
-                reportDe.qtycus += val.qty
+                reportDeqtycus.qtycus += val.qty
             }
         }
         
@@ -273,6 +274,7 @@ exports.reportDetailData = function (req, res, next) {
         reportOrder.user = user;
         reportOrder.withdrawdate = datetime
         req.result = reportOrder
+        console.log(req.result)
         next();
     }
 }
