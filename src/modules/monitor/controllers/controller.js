@@ -71,8 +71,8 @@ exports.create = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            var socketio = req.app.get('socketio'); 
-            socketio.sockets.emit('monitor-created', data); 
+            // var socketio = req.app.get('socketio'); 
+            // socketio.sockets.emit('monitor-created', data); 
             res.jsonp({
                 status: 200,
                 data: data
