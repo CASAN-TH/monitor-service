@@ -23,13 +23,18 @@ exports.getList = function (req, res) {
     });
 };
 
-exports.generateMonitorNo = function (req, res, next) {
+var pad = function (num, size) {
+    var s = "000000000" + num;
+    return s.substr(s.length - size);
+}
+
+exports.generateMonitorNo1 = function (req, res, next) {
     if (req.body) {
         var newDate = new Date();
         req.newDate = newDate;
-        var textDate = newDate.getFullYear().toString().substr(2, 2) + ((newDate.getMonth() + 1) < 10 ? '0' : '') + (newDate.getMonth() + 1).toString() + newDate.getDate().toString();
+        var textDate = newDate.getFullYear().toString().substr(2, 2) + ((newDate.getMonth() + 1) < 10 ? '0' : '') + (newDate.getMonth() + 1).toString() + pad(newDate.getDate(), 2);
         var codeteam = req.body.team.codeteam
-        req.body.monitorno = codeteam + textDate
+        req.body.prefix = codeteam + textDate
         next();
     } else {
         return res.status(400).send({
@@ -37,7 +42,23 @@ exports.generateMonitorNo = function (req, res, next) {
             message: 'Order not found.'
         });
     }
+
 };
+
+exports.generateMonitorNo2 = function (req, res, next) {
+    Monitor.find({ prefix: req.body.prefix }, function (err, data) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            // console.log(data)
+            req.body.monitorno = req.body.prefix + pad(data.length + 1, 3);
+            next();
+        }
+    });
+}
 
 exports.create = function (req, res) {
     var newMonitor = new Monitor(req.body);
@@ -406,7 +427,7 @@ exports.getMonitorByOrder = function (req, res, next, id) {
 
             });
             req.order = b;
-            console.log(req.order)
+            // console.log(req.order)
 
 
 
