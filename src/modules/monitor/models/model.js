@@ -2,9 +2,17 @@
 // use model
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+// var counterSchema = new Schema({
+//     prefix: { type: String, required: true },
+//     seq: { type: Number, default: 0 }
+// });
 
+
+// var counter = mongoose.model('counter', counterSchema);
 
 var MonitorSchema = new Schema({
+    prefix: { type: String},
+    seq: { type: Number, default: 0 },
     totalorderamount: {
         type: Number
     },
@@ -206,5 +214,35 @@ var MonitorSchema = new Schema({
         }
     }
 });
+
+// var pad = function (num, size) {
+//     var s = "000000000" + num;
+//     return s.substr(s.length - size);
+// }
+
+// MonitorSchema.pre("save", function (next) {
+//     var doc = this;
+//     var newDate = new Date();
+//     var prefix = doc.team.codeteam + newDate.getFullYear().toString().substr(2, 2) + ((newDate.getMonth() + 1) < 10 ? '0' : '') + (newDate.getMonth() + 1).toString() + pad(newDate.getDate(), 2);
+//     // counter.findOneAndUpdate({ prefix: prefix }, {
+//     //     $inc: { seq: 1 }
+//     // },
+//     //     function (error, counter) {
+//     //         console.log(counter);
+//     //         if (error) return next(error);
+//     //         doc.monitorno = prefix + pad(counter ? counter.seq : 1, 3);
+//     //         next();
+//     //     });
+//     // counter.findById(
+//     //     prefix
+//     //     , function (error, data) {
+//     //         console.log(data);
+//     //         if (error) return next(error);
+//     //         doc.monitorno = prefix + pad(data ? data.seq : 1, 3);
+//     //         next();
+//     //     });
+//     doc.monitorno = prefix;
+//     next();
+// });
 
 mongoose.model("Monitor", MonitorSchema);

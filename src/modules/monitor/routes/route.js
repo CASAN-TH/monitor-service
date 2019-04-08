@@ -8,7 +8,8 @@ module.exports = function (app) {
     app.route(url).all(policy.isAllowed)
         .get(controller.getList)
         .post(
-            controller.generateMonitorNo,
+            controller.generateMonitorNo1,
+            controller.generateMonitorNo2,
             controller.create
         );
 
