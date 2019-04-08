@@ -176,6 +176,7 @@ exports.reportAllData = function (req, res, next) {
                     if (!productData[indxNameV2].type) {
                         productData[indxNameV2].type = [{ name: value.name, qty: value.qty }]
                         totalQty += value.qty;
+                        productData[indxNameV2].productQty = value.qty;
                         // console.log(productData[indxNameV2]);
                     } else {
                         // console.log(value.name + ' ----push รอบ2')
@@ -185,9 +186,11 @@ exports.reportAllData = function (req, res, next) {
                         if (indxValueName === -1) {
                             productData[indxNameV2].type.push({ name: value.name, qty: value.qty });
                             totalQty += value.qty;
+                            productData[indxNameV2].productQty += value.qty;
                         } else {
                             productData[indxNameV2].type[indxValueName].qty += value.qty;
                             totalQty += value.qty;
+                            productData[indxNameV2].productQty += value.qty;
                         }
                     }
                 }
@@ -203,6 +206,7 @@ exports.reportAllData = function (req, res, next) {
             totalqty: totalQty
         }
     }
+    // console.log(req.reportOrder.reportall.items)
     next();
 }
 
