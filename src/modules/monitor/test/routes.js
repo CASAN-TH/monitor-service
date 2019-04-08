@@ -975,7 +975,7 @@ describe('Monitor CRUD routes tests', function () {
                                 return done(err);
                             }
                             var resp = res.body;
-                            // console.log(resp.data)
+                            // console.log(resp.data.reportall.items)
                             assert.equal(resp.data.teamname, mo1.team.teamname)
                             assert.equal(resp.data.reportall.items[0].name, mo1.orders[0].items[0].name)
                             assert.equal(resp.data.reportall.items[1].name, mo1.orders[0].items[1].name)
@@ -996,8 +996,15 @@ describe('Monitor CRUD routes tests', function () {
                             assert.equal(resp.data.reportall.items[2].type[1].name, mo1.orders[1].items[1].option[0].value[1].name)
                             assert.equal(resp.data.reportall.items[2].type[1].qty, mo1.orders[1].items[1].option[0].value[1].qty)
                             assert.equal(resp.data.reportall.items[0].price, mo1.orders[0].items[0].price)
+                            assert.equal(resp.data.reportall.items[0].productQty, 
+                                resp.data.reportall.items[0].type[0].qty + resp.data.reportall.items[0].type[1].qty +
+                                resp.data.reportall.items[0].type[2].qty)
                             assert.equal(resp.data.reportall.items[1].price, mo1.orders[0].items[1].price)
+                            assert.equal(resp.data.reportall.items[1].productQty, 
+                                resp.data.reportall.items[1].type[0].qty + resp.data.reportall.items[1].type[1].qty)
                             assert.equal(resp.data.reportall.items[2].price, mo1.orders[1].items[1].price)
+                            assert.equal(resp.data.reportall.items[2].productQty, 
+                                resp.data.reportall.items[2].type[0].qty + resp.data.reportall.items[2].type[1].qty)
                             assert.equal(resp.data.reportall.totalprice, mo1.totalorderamount)
                             assert.equal(resp.data.reportall.totalqty,
                                 mo1.orders[0].items[0].option[0].value[0].qty + mo1.orders[0].items[0].option[0].value[1].qty +

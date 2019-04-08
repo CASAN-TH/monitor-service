@@ -197,6 +197,7 @@ exports.reportAllData = function (req, res, next) {
                     if (!productData[indxNameV2].type) {
                         productData[indxNameV2].type = [{ name: value.name, qty: value.qty }]
                         totalQty += value.qty;
+                        productData[indxNameV2].productQty = value.qty;
                         // console.log(productData[indxNameV2]);
                     } else {
                         // console.log(value.name + ' ----push รอบ2')
@@ -206,9 +207,11 @@ exports.reportAllData = function (req, res, next) {
                         if (indxValueName === -1) {
                             productData[indxNameV2].type.push({ name: value.name, qty: value.qty });
                             totalQty += value.qty;
+                            productData[indxNameV2].productQty += value.qty;
                         } else {
                             productData[indxNameV2].type[indxValueName].qty += value.qty;
                             totalQty += value.qty;
+                            productData[indxNameV2].productQty += value.qty;
                         }
                     }
                 }
@@ -224,6 +227,7 @@ exports.reportAllData = function (req, res, next) {
             totalqty: totalQty
         }
     }
+    // console.log(req.reportOrder.reportall.items)
     next();
 }
 
@@ -231,12 +235,12 @@ exports.reportDetailData = function (req, res, next) {
 
     var reportOrder = req.reportOrder;
     var data = req.data;
-    // console.log(data);
     var reportDetail = []
 
     for (let i = 0; i < data.orders.length; i++) {
         var order = data.orders[i];
         var itemsData = [];
+        var num = 0;
         for (let j = 0; j < order.items.length; j++) {
             var item = order.items[j];
             for (let k = 0; k < item.option.length; k++) {
@@ -249,8 +253,10 @@ exports.reportDetailData = function (req, res, next) {
                 }
 
                 itemsData.push({ name: displayName, value: valueData })
+     
             }
         }
+   
         //ไว้ตรงนี้เพราะจะ push ตาม order
         reportDetail.push({
             customer: {
@@ -259,9 +265,34 @@ exports.reportDetailData = function (req, res, next) {
             },
             items: itemsData
         });
+     
     }
+    for (let g = 0; g < reportDetail.length; g++) {
+        var reportDe = reportDetail[g].items;
+        reportDe.qtycus = 0;
+        for (let r = 0; r < reportDe.length; r++) {
+            var item = reportDe[r].value;
+            for (let p = 0; p < item.length; p++) {
+                var val = item[p];
+                reportDe.qtycus += val.qty
+            }
+        }
+        
+    }
+
+    var date = new Date();
+    var dateday = date.getDate().toString()+'/'+date.getMonth().toString()+'/'+date.getFullYear();
+    var time = date.getTime().toString();
+    var datetime = {
+        date:dateday,
+        time:time
+    }
+
+    var user = req.user;
     if (reportOrder && reportDetail) {
-        reportOrder.reportDetail = reportDetail
+        reportOrder.reportDetail = reportDetail;
+        reportOrder.user = user;
+        reportOrder.withdrawdate = datetime
         req.result = reportOrder
         next();
     }
