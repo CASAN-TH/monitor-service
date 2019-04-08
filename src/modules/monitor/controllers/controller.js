@@ -295,13 +295,13 @@ exports.reportDetailData = function (req, res, next) {
         firstname: userreq.firstname ? userreq.firstname : 'not firstname',
         lastname: userreq.lastname ? userreq.lastname : 'not lastname'
     }
-    console.log(user)
+    // console.log(user)
     if (reportOrder && reportDetail) {
         reportOrder.reportDetail = reportDetail;
-        reportOrder.user = user;
+        // reportOrder.user = user;
         reportOrder.withdrawdate = datetime
         req.result = reportOrder
-        // console.log(req.result)
+        console.log(req.result)
         next();
     }
 }
