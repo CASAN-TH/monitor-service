@@ -22,7 +22,7 @@ var MonitorSchema = new Schema({
     status: {
         type: String,
         enum: ['waitwithdrawal', 'waitpack', 'waitshipping', 'complete'],
-        default: ['waitwithdrawal']
+        default: 'waitwithdrawal'
     },
     logs: {
         type: [
@@ -159,14 +159,34 @@ var MonitorSchema = new Schema({
                             }
                         },
                         productlist: {
-                            type: [{
-                                name: {
-                                    type: String
-                                },
-                                qty: {
-                                    type: Number
+                            type: [
+                                {
+                                    name: {
+                                        type: String
+                                    },
+                                    option: {
+                                        type: [
+                                            {
+                                                name: {
+                                                    type: String
+                                                },
+                                                value: {
+                                                    type: [
+                                                        {
+                                                            name: {
+                                                                type: String
+                                                            },
+                                                            qty: {
+                                                                type: Number
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                            }
+                                        ]
+                                    }
                                 }
-                            }]
+                            ]
                         }
                     }]
                 },
