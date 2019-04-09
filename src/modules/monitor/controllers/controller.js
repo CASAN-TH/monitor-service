@@ -292,8 +292,8 @@ exports.reportDetailData = function (req, res, next) {
     }
     var userreq = req.user;
     var user = {
-        firstname: userreq.firstname ? userreq.firstname : 'not firstname',
-        lastname: userreq.lastname ? userreq.lastname : 'not lastname'
+        firstname: userreq ? userreq.firstname : '',
+        lastname: userreq ? userreq.lastname : ''
     }
     console.log(user)
     if (reportOrder && reportDetail) {
