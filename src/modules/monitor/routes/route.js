@@ -56,11 +56,15 @@ module.exports = function (app) {
             controller.reportAllData,
             controller.reportDetailData,
             controller.reportjs
-            );
+        );
     app.route('/api/monitor/reportlable/:orderid')
         .get(
             controller.reportlable
-        );        
+        );
+    app.route('/api/monitor/reportlableall/:monitorId')
+        .get(
+            controller.reportlableAll
+        );
 
     app.param('monitorId', controller.getByID);
     app.param('orderid', controller.getMonitorByOrder);

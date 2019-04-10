@@ -704,3 +704,41 @@ exports.reportlable = function (req, res) {
     }
     request(options).pipe(res);
 }
+
+exports.reportlableAll = function (req, res) {
+
+    // var report = req.order;
+    var monitorData = req.data;
+    // console.log(monitorData)
+    var reportorder = {
+        labels: []
+    };
+    for (let i = 0; i < monitorData.orders.length; i++) {
+        var order = monitorData.orders[i];
+        for (let z = 0; z < order.labels.length; z++) {
+            order.labels[z].customer.tel = order.customer.tel;
+            order.labels[z].customer.paymenttype = order.paymenttype;
+            reportorder.labels.push(order.labels[z])
+        }
+    }
+
+
+    var data = {
+        template: { 'shortid': 'Syi8NVVKV' },
+        data: reportorder,
+        options: {
+            preview: true
+        }
+    }
+    var options = {
+        uri: 'http://13.250.98.127/api/report',
+        method: 'POST',
+        json: data
+    }
+    request(options).pipe(res);
+
+    res.jsonp({
+        status: 200,
+        data: reportorder
+    });
+}

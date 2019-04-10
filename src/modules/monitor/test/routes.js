@@ -130,7 +130,7 @@ describe('Monitor CRUD routes tests', function () {
                                 "province": "กาญจนบุรี",
                                 "zipcode": "71220"
                             },
-                            "trackno": "1111",
+                            "trackno": "2222",
                             "customer": {
                                 "firstname": "ณัฐพล",
                                 "lastname": "ใจดี"
@@ -140,15 +140,12 @@ describe('Monitor CRUD routes tests', function () {
 
                                     "option": [
                                         {
-        
                                             "value": [
                                                 {
-        
                                                     "name": "RL01",
                                                     "qty": 10
                                                 },
                                                 {
-        
                                                     "name": "RL02",
                                                     "qty": 20
                                                 }
@@ -235,7 +232,70 @@ describe('Monitor CRUD routes tests', function () {
                     "paymenttype": {
                         "name": "ชำระเงินปลายทาง"
                     },
-                    "labels": []
+                    "labels": [{
+                        "address": {
+                            "houseno": "5/16",
+                            "village": "",
+                            "street": "",
+                            "subdistrict": "สมเด็จเจริญ",
+                            "district": "หนองปรือ",
+                            "province": "กาญจนบุรี",
+                            "zipcode": "71220"
+                        },
+                        "trackno": "3333",
+                        "customer": {
+                            "firstname": "ณัฐพล",
+                            "lastname": "ใจดี"
+                        },
+                        "productlist": [
+                            {
+                                "name": "Powder",
+                                "qty": 14
+                            }, {
+                                "name": "perfect lip",
+                                "qty": 10
+                            }
+                        ]
+                    },
+                    {
+                        "address": {
+                            "houseno": "5/16",
+                            "village": "",
+                            "street": "",
+                            "subdistrict": "สมเด็จเจริญ",
+                            "district": "หนองปรือ",
+                            "province": "กาญจนบุรี",
+                            "zipcode": "71220"
+                        },
+                        "trackno": "4444",
+                        "customer": {
+                            "firstname": "ณัฐพล",
+                            "lastname": "ใจดี"
+                        },
+                        "productlist": [
+                            {
+
+                                "option": [
+                                    {
+                                        "value": [
+                                            {
+                                                "name": "RL01",
+                                                "qty": 10
+                                            },
+                                            {
+                                                "name": "RL02",
+                                                "qty": 20
+                                            }
+                                        ],
+                                        "name": "สีลิปสติก"
+                                    }
+                                ],
+                                "name": "perfect lip",
+                                "price": 69,
+                                "amount": 2070
+                            }
+                        ]
+                    }]
                 }
             ],
             "totalorderamount": 33721,
@@ -318,6 +378,35 @@ describe('Monitor CRUD routes tests', function () {
             });
 
     });
+
+    it('should be label by Monitor', (done) => {
+        request(app)
+            .post('/api/monitors')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockup)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                request(app)
+                    .get('/api/monitor/reportlableall/' + resp.data._id)
+                    .set('Authorization', 'Bearer ' + token)
+                    .expect(200)
+                    .end(function (err, res) {
+                        if (err) {
+                            return done(err);
+                        }
+                        var resp = res.body
+                        assert.equal(resp.data.labels[0].trackno, mockup.orders[0].labels[0].trackno)
+                        assert.equal(resp.data.labels[1].trackno, mockup.orders[0].labels[1].trackno)
+                        assert.equal(resp.data.labels[2].trackno, mockup.orders[1].labels[0].trackno)
+                        assert.equal(resp.data.labels[3].trackno, mockup.orders[1].labels[1].trackno)
+                        done();
+                    })
+            })
+    })
 
     it('should be Monitor post use token', (done) => {
         request(app)
@@ -437,7 +526,7 @@ describe('Monitor CRUD routes tests', function () {
                         var resp = res.body;
                         assert.equal(resp.status, 200);
                         assert.equal(resp.data.status, "waitpack");
-                        
+
                         done();
                     });
             });
