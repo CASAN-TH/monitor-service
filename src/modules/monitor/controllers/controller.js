@@ -143,6 +143,10 @@ exports.update = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
+            if (data.status === "complete") {
+                // console.log(data.orders)
+                mq.publish('HistoryBuy', 'orders', JSON.stringify(data.orders));
+            }
             res.jsonp({
                 status: 200,
                 data: data
@@ -295,12 +299,12 @@ exports.reportDetailData = function (req, res, next) {
         firstname: userreq ? userreq.firstname : '',
         lastname: userreq ? userreq.lastname : ''
     }
-    console.log(user)
+    // console.log(user)
     if (reportOrder && reportDetail) {
         reportOrder.reportDetail = reportDetail;
         reportOrder.withdrawdate = datetime
         req.result = reportOrder
-        console.log(req.result)
+        // console.log(req.result)
         next();
     }
 }
