@@ -830,21 +830,17 @@ exports.updateData = function (req, res) {
     var updateOr = req.updateorder;
     var id = req.order_id;
     var bigdata = req.data;
-    console.log('body ', req.body)
-    // console.log(bigdata)
-    // console.log('aaaaa', updateOr)
-
 
     var a;
+    var cookiedata;
     bigdata.forEach(element => {
         a = element.orders.findIndex(function (params) {
-            // console.log(params)
-            var cookiedata = {
+            cookiedata = {
                 address: params.customer.address,
-                trackno: "1111",
+                trackno: "1111test",
                 customer: {
-                    firstname: params.firstname,
-                    lastname: params.lastname
+                    firstname: params.customer.firstname,
+                    lastname: params.customer.lastname
                 },
                 productlist: req.body.productlist
             }
@@ -853,10 +849,10 @@ exports.updateData = function (req, res) {
 
         })
         element.orders[a] = updateOr;
+        element.orders[a].labels.push(cookiedata)
+        console.log(element.orders[a].labels.length)
         // console.log(element.orders[a].labels[0].productlist[0].option[0].value)
     });
-
-
 
     // console.log(bigdata[0].orders[0].labels[0].productlist[0].option[0].value)
 
@@ -867,17 +863,11 @@ exports.updateData = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            // console.log(dataupdat.orders[0].labels[0].productlist[0].option[0].value)
+            console.log(dataupdat.orders[0].labels.length)
             res.jsonp({
-                status: 200
+                status: 200,
+                data: dataupdat
             })
         }
     });
-
-
-    // console.log(updateOr)
-    // console.log(id)
-    // res.jsonp({
-    //     status: 200
-    // })
 }
