@@ -1230,6 +1230,33 @@ describe('Monitor CRUD routes tests', function () {
 
     });
 
+    it('Should delete Box by Label_Id', function (done) {
+        request(app)
+            .post('/api/monitors')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockup)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                // console.log(resp.data.orders[0].labels)
+                request(app)
+                    .delete('/api/monitor/deletebox/' + resp.data.orders[0].labels[0]._id)
+                    .set('Authorization', 'Bearer ' + token)
+                    .expect(200)
+                    .end(function (err, res) {
+                        if (err) {
+                            return done(err);
+                        }
+                        var resp = res.body;
+                        // console.log(resp.data.orders[0]);
+                        done();
+                    });
+            });
+    });
+
     it('Should be get Graph product by team_id', function (done) {
         var monitor1 = new Monitor({
             "status": "waitwithdrawal",
