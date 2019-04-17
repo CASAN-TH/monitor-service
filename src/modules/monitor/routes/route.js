@@ -73,7 +73,10 @@ module.exports = function (app) {
         );
 
     app.route('/api/monitor/addbox/:orderid')
-            .post(controller.addBox)
+            .post(
+                controller.addBox,
+                controller.updateData
+                )
 
     app.param('monitorId', controller.getByID);
     app.param('orderid', controller.getMonitorByOrder);
