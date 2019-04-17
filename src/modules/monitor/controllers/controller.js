@@ -438,10 +438,7 @@ exports.getMonitorByOrder = function (req, res, next, id) {
 
             });
             req.order = b;
-            // console.log(req.order)
-
-
-
+            // console.log(req.order.labels[1].option)
             next();
         };
     });
@@ -735,4 +732,45 @@ exports.reportlableAll = function (req, res) {
         json: data
     }
     request(options).pipe(res);
+}
+
+exports.addBox = function (req, res) {
+
+    var bodylabels = req.body;
+    for (let h = 0; h < req.order.labels[0].productlist.length; h++) {
+        var order = req.order.labels[0].productlist[h];
+        for (let k = 0; k < order.option.length; k++) {
+            var option = order.option[k];
+            for (let l = 0; l < option.value.length; l++) {
+                var value = option.value[l];
+                console.log(value)
+                var qty = 0;
+                var dataupdate = bodylabels.productlist.filter(function (paramsproductlist) {
+                    if (order.name.toString() === paramsproductlist.name.toString()) {
+                        paramsproductlist.option.filter(function (paramsoption) {
+                            paramsoption.value.filter(function (paramsvalue) {
+                                // console.log(paramsvalue.name)
+                                if (paramsvalue.name.toString() === value.name.toString()) {
+
+                                     
+                                        qty = value.qty - paramsvalue.qty
+                                    
+
+
+                                }
+                            })
+
+                        })
+
+                    }
+                });
+                console.log(qty);
+            }
+        }
+
+
+    }
+    res.jsonp({
+        status: 200
+    })
 }

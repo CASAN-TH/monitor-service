@@ -112,11 +112,44 @@ describe('Monitor CRUD routes tests', function () {
                             },
                             "productlist": [
                                 {
-                                    "name": "Powder",
-                                    "qty": 14
-                                }, {
+                                    "option": [
+                                        {
+                                            "value": [
+                                                {
+                                                    "name": "RL01",
+                                                    "qty": 13
+                                                },
+                                                {
+                                                    "name": "RL02",
+                                                    "qty": 10
+                                                }
+                                            ],
+                                            "name": "สีลิปสติก"
+                                        }
+                                    ],
                                     "name": "perfect lip",
-                                    "qty": 10
+                                    "price": 69,
+                                    "amount": 2070
+                                },
+                                {
+                                    "option": [
+                                        {
+                                            "value": [
+                                                {
+                                                    "name": "R2L01",
+                                                    "qty": 16
+                                                },
+                                                {
+                                                    "name": "R2L02",
+                                                    "qty": 105
+                                                }
+                                            ],
+                                            "name": "สีลิปสติก"
+                                        }
+                                    ],
+                                    "name": "perfect lip2",
+                                    "price": 69,
+                                    "amount": 2070
                                 }
                             ]
                         },
@@ -249,11 +282,24 @@ describe('Monitor CRUD routes tests', function () {
                         },
                         "productlist": [
                             {
-                                "name": "Powder",
-                                "qty": 14
-                            }, {
+                                "option": [
+                                    {
+                                        "value": [
+                                            {
+                                                "name": "RL01",
+                                                "qty": 12
+                                            },
+                                            {
+                                                "name": "RL02",
+                                                "qty": 22
+                                            }
+                                        ],
+                                        "name": "สีลิปสติก"
+                                    }
+                                ],
                                 "name": "perfect lip",
-                                "qty": 10
+                                "price": 69,
+                                "amount": 2070
                             }
                         ]
                     },
@@ -274,7 +320,6 @@ describe('Monitor CRUD routes tests', function () {
                         },
                         "productlist": [
                             {
-
                                 "option": [
                                     {
                                         "value": [
@@ -2891,7 +2936,7 @@ describe('Monitor CRUD routes tests', function () {
     });
 
 
-    xit('should be Monitor addbox', (done) => {
+    it('should be Monitor addbox', (done) => {
         request(app)
             .post('/api/monitors')
             .set('Authorization', 'Bearer ' + token)
@@ -2906,16 +2951,49 @@ describe('Monitor CRUD routes tests', function () {
                 var addbox = {
                         "productlist": [
                             {
-                                "name": "Powder",
-                                "qty": 5
-                            }, {
+                                "option": [
+                                    {
+                                        "value": [
+                                            {
+                                                "name": "RL01",
+                                                "qty": 5
+                                            },
+                                            {
+                                                "name": "RL02",
+                                                "qty": 5
+                                            }
+                                        ],
+                                        "name": "สีลิปสติก"
+                                    }
+                                ],
                                 "name": "perfect lip",
-                                "qty": 12
+                                "price": 69,
+                                "amount": 2070
+                            },
+                            {
+                                "option": [
+                                    {
+                                        "value": [
+                                            {
+                                                "name": "R2L01",
+                                                "qty": 1
+                                            },
+                                            {
+                                                "name": "R2L02",
+                                                "qty": 1
+                                            }
+                                        ],
+                                        "name": "สีลิปสติก"
+                                    }
+                                ],
+                                "name": "perfect lip2",
+                                "price": 69,
+                                "amount": 2070
                             }
                         ]
                 }
                 request(app)
-                    .post('/api/monitor/addbox')
+                    .post('/api/monitor/addbox/'+ resp.data.orders[0]._id)
                     .set('Authorization', 'Bearer ' + token)
                     .send(addbox)
                     .expect(200)
@@ -2924,7 +3002,7 @@ describe('Monitor CRUD routes tests', function () {
                             return done(err);
                         }
                         var resp = res.body;
-
+                        // console.log(resp)
                         done();
                     });
             });
