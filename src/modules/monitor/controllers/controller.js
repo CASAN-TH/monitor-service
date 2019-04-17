@@ -722,7 +722,6 @@ exports.reportlableAll = function (req, res) {
         }
     }
 
-
     var data = {
         template: { 'shortid': 'Syi8NVVKV' },
         data: reportorder,
@@ -736,9 +735,4 @@ exports.reportlableAll = function (req, res) {
         json: data
     }
     request(options).pipe(res);
-
-    res.jsonp({
-        status: 200,
-        data: reportorder
-    });
 }
