@@ -2324,7 +2324,7 @@ describe('Monitor CRUD routes tests', function () {
         });
     });
 
-    xit('Should be get Graph Line by user_id', function (done) {
+    it('Should be get Graph Line by user_id', function (done) {
         var monitor1 = new Monitor({
             "status": "waitwithdrawal",
             "team": {
@@ -2886,6 +2886,46 @@ describe('Monitor CRUD routes tests', function () {
                 });
             });
         });
+    });
+
+
+    it('should be Monitor post use token', (done) => {
+        request(app)
+            .post('/api/monitors')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockup)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+
+                var addbox = {
+                        "productlist": [
+                            {
+                                "name": "Powder",
+                                "qty": 5
+                            }, {
+                                "name": "perfect lip",
+                                "qty": 12
+                            }
+                        ]
+                }
+                request(app)
+                    .post('/api/monitor/addbox')
+                    .set('Authorization', 'Bearer ' + token)
+                    .send(addbox)
+                    .expect(200)
+                    .end(function (err, res) {
+                        if (err) {
+                            return done(err);
+                        }
+                        var resp = res.body;
+
+                        done();
+                    });
+            });
     });
 
 
