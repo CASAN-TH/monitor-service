@@ -424,7 +424,7 @@ describe('Monitor CRUD routes tests', function () {
 
     });
 
-    it('should be print by label', (done) => {
+    it('should be print All', (done) => {
         request(app)
             .post('/api/monitors')
             .set('Authorization', 'Bearer ' + token)
@@ -448,12 +448,36 @@ describe('Monitor CRUD routes tests', function () {
                         // assert.equal(resp.data.labels[1].trackno, mockup.orders[0].labels[1].trackno)
                         // assert.equal(resp.data.labels[2].trackno, mockup.orders[1].labels[0].trackno)
                         // assert.equal(resp.data.labels[3].trackno, mockup.orders[1].labels[1].trackno)
-
-                        
                         done();
                     })
             })
-    })
+    });
+
+    it('should be print by label', (done) => {
+        request(app)
+            .post('/api/monitors')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockup)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                // console.log(resp.data.orders[0].labels[0]._id)
+                request(app)
+                    .get('/api/monitor/reportbylable/' + resp.data.orders[0].labels[0]._id)
+                    .set('Authorization', 'Bearer ' + token)
+                    .expect(200)
+                    .end(function (err, res) {
+                        if (err) {
+                            return done(err);
+                        }
+                        // var resp = res.body
+                        done();
+                    })
+            })
+    });
 
     it('should be Monitor post use token', (done) => {
         request(app)

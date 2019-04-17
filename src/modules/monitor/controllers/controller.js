@@ -674,6 +674,61 @@ exports.reportjs = function (req, res) {
     request(options).pipe(res);
 }
 
+exports.getlableById = function (req, res, next, id) {
+    // console.log(id)
+    Monitor.findOne({ "orders.labels._id": id }, function (err, data) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            req.rableById = data.orders
+            req.lableId = id
+            next();
+        }
+    });
+}
+
+exports.printByLable = function (req, res) {
+    var id = req.lableId;
+    var orders = req.rableById;
+    var reportByLable = {
+        labels: []
+    }
+    for (let i = 0; i < orders.length; i++) {
+        var order = orders[i];
+        for (let j = 0; j < order.labels.length; j++) {
+            var label = order.labels[j];
+            if (label._id == id) {
+                // console.log(label)
+                // console.log(order.customer.tel)
+                // console.log(order.paymenttype)
+                var dataReport;
+                dataReport = label;
+                dataReport.customer.tel = order.customer.tel;
+                dataReport.customer.paymenttype = order.paymenttype;
+                reportByLable.labels.push(dataReport)
+            }
+        }
+    }
+    // console.log(reportByLable)
+
+    var data = {
+        template: { 'shortid': 'Syi8NVVKV' },
+        data: reportByLable,
+        options: {
+            preview: true
+        }
+    }
+    var options = {
+        uri: 'http://13.250.98.127/api/report',
+        method: 'POST',
+        json: data
+    }
+    request(options).pipe(res);
+}
+
 exports.reportlable = function (req, res) {
 
     var report = req.order;
