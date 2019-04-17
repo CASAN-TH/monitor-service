@@ -72,6 +72,12 @@ module.exports = function (app) {
             controller.reportlableAll
         );
 
+    app.route('/api/monitor/addbox/:orderid')
+            .post(
+                controller.addBox,
+                controller.updateData
+                )
+
     app.param('monitorId', controller.getByID);
     app.param('orderid', controller.getMonitorByOrder);
     app.param('teamid', controller.getTeamById);
