@@ -61,6 +61,12 @@ module.exports = function (app) {
         .get(
             controller.reportlable
         );
+
+    app.route('/api/monitor/reportbylable/:lableid')
+        .get(
+            controller.printByLable
+        );
+
     app.route('/api/monitor/reportlableall/:monitorId')
         .get(
             controller.reportlableAll
@@ -68,7 +74,8 @@ module.exports = function (app) {
 
     app.param('monitorId', controller.getByID);
     app.param('orderid', controller.getMonitorByOrder);
-    app.param('teamid', controller.getTeamById)
+    app.param('teamid', controller.getTeamById);
+    app.param('lableid', controller.getlableById);
 
     /**
      * Message Queue
