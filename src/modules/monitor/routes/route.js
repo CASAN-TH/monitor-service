@@ -51,6 +51,12 @@ module.exports = function (app) {
     app.route('/api/monitor/team/:teamid')
         .get(controller.returnData);
 
+    app.route('/api/monitor/deletebox/:lableid')
+        .delete(
+            controller.deleteBox,
+            controller.returnData
+        )
+
     app.route('/api/monitor/reportdetail/:monitorId')
         .get(
             controller.reportAllData,

@@ -675,6 +675,33 @@ exports.reportjs = function (req, res) {
     request(options).pipe(res);
 }
 
+exports.deleteBox = function (req, res, next) {
+    var id = req.lableId;
+    var rableById = req.rableById;
+    for (let i = 0; i < rableById.orders.length; i++) {
+        var order = rableById.orders[i];
+        for (let j = 0; j < order.labels.length; j++) {
+            var label = order.labels[j];
+            if (label._id == id) {
+                order.labels.splice(j, 1)
+                rableById.save(function (err, data) {
+                    if (err) {
+                        return res.status(400).send({
+                            status: 400,
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    } else {
+                        // console.log(data.orders[0])
+                        req.result = data;
+                        next();
+                    };
+                });
+            }
+        }
+    }
+    // console.log(rableById.orders[0])
+}
+
 exports.getlableById = function (req, res, next, id) {
     // console.log(id)
     Monitor.findOne({ "orders.labels._id": id }, function (err, data) {
@@ -684,8 +711,9 @@ exports.getlableById = function (req, res, next, id) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            req.rableById = data.orders
+            req.rableById = data
             req.lableId = id
+            // console.log(req.rableById.orders[0])
             next();
         }
     });
@@ -693,7 +721,7 @@ exports.getlableById = function (req, res, next, id) {
 
 exports.printByLable = function (req, res) {
     var id = req.lableId;
-    var orders = req.rableById;
+    var orders = req.rableById.orders;
     var reportByLable = {
         labels: []
     }
