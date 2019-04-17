@@ -2889,7 +2889,7 @@ describe('Monitor CRUD routes tests', function () {
     });
 
 
-    it('should be Monitor post use token', (done) => {
+    xit('should be Monitor addbox', (done) => {
         request(app)
             .post('/api/monitors')
             .set('Authorization', 'Bearer ' + token)
