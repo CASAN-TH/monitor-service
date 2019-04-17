@@ -683,6 +683,7 @@ exports.deleteBox = function (req, res, next) {
         for (let j = 0; j < order.labels.length; j++) {
             var label = order.labels[j];
             if (label._id == id) {
+                // console.log('this work')
                 order.labels.splice(j, 1)
                 rableById.save(function (err, data) {
                     if (err) {
@@ -865,20 +866,19 @@ exports.updateData = function (req, res) {
         a = element.orders.findIndex(function (params) {
             cookiedata = {
                 address: params.customer.address,
-                trackno: "1111test",
                 customer: {
                     firstname: params.customer.firstname,
                     lastname: params.customer.lastname
                 },
                 productlist: req.body.productlist
             }
-            console.log(cookiedata)
+            // console.log(cookiedata)
             return params._id.toString() === id.toString()
 
         })
         element.orders[a] = updateOr;
         element.orders[a].labels.push(cookiedata)
-        console.log(element.orders[a].labels.length)
+        // console.log(element.orders[a].labels.length)
         // console.log(element.orders[a].labels[0].productlist[0].option[0].value)
     });
 
