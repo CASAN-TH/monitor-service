@@ -3035,11 +3035,11 @@ describe('Monitor CRUD routes tests', function () {
                                         "value": [
                                             {
                                                 "name": "R2L01",
-                                                "qty": 1
+                                                "qty": 16
                                             },
                                             {
                                                 "name": "R2L02",
-                                                "qty": 1
+                                                "qty": 104
                                             }
                                         ],
                                         "name": "สีลิปสติก"
