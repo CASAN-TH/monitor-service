@@ -878,23 +878,40 @@ exports.addBox = function (req, res, next) {
                     if (order.name.toString() === paramsproductlist.name.toString()) {
                         paramsproductlist.option.filter(function (paramsoption) {
                             paramsoption.value.filter(function (paramsvalue) {
-                                // console.log(paramsvalue.name)
                                 if (paramsvalue.name.toString() === value.name.toString()) {
                                     value.qty = value.qty - paramsvalue.qty
                                 }
                             })
-
                         })
-
                     }
                 });
-                // console.log(value.qty);
-                // console.log(value);
-                // console.log("===================================")
             }
         }
-        // console.log(option)
+        const a = option.value.length
+        for (let o = 0; o < a; o++) {
+            var valueIndex = option.value.findIndex(function (paramsv) {
+                return paramsv.qty === 0
+            })
+            if (valueIndex >= 0) {
+                option.value.splice(valueIndex, 1)
+            }
+        }
+    // console.log(option.value.length)
+    // console.log('sss ',req.order.labels[0].productlist.length)
+    // const z = req.order.labels[0].productlist.length;
+    // for (let f = 0; f < z; f++) {
+    //     var productlistIndex = req.order.labels[0].productlist.findIndex(function (paramsp) {
+    //         return option.value.length === 0
+    //     })
+    //     console.log('index ',productlistIndex)
+    //     if (option.value.length === 0) {
+    //         req.order.labels[0].productlist.splice(productlistIndex,1)
+    //     }
+    // }
+        
     }
+    
+
     var order = req.order;
     req.updateorder = order;
     next()
@@ -917,17 +934,15 @@ exports.updateData = function (req, res) {
                 },
                 productlist: req.body.productlist
             }
-            // console.log(cookiedata)
+
             return params._id.toString() === id.toString()
 
         })
         element.orders[a] = updateOr;
         element.orders[a].labels.push(cookiedata)
-        // console.log(element.orders[a].labels.length)
-        // console.log(element.orders[a].labels[0].productlist[0].option[0].value)
     });
 
-    // console.log(bigdata[0].orders[0].labels[0].productlist[0].option[0].value)
+    console.log(bigdata[0].orders[0].labels[0].productlist)
 
     Monitor.findOneAndUpdate({ "orders._id": id }, bigdata[0], { new: true }, function (err, dataupdat) {
         if (err) {
@@ -936,7 +951,6 @@ exports.updateData = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            console.log(dataupdat.orders[0].labels.length)
             res.jsonp({
                 status: 200,
                 data: dataupdat

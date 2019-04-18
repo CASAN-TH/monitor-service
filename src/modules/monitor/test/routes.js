@@ -122,6 +122,11 @@ describe('Monitor CRUD routes tests', function () {
                                                 {
                                                     "name": "RL02",
                                                     "qty": 10
+                                                },
+                                                
+                                                {
+                                                    "name": "RL03",
+                                                    "qty": 20
                                                 }
                                             ],
                                             "name": "สีลิปสติก"
@@ -3021,48 +3026,51 @@ describe('Monitor CRUD routes tests', function () {
                 var resp = res.body;
 
                 var addbox = {
-                    "productlist": [
-                        {
-                            "option": [
-                                {
-                                    "value": [
-                                        {
-                                            "name": "RL01",
-                                            "qty": 5
-                                        },
-                                        {
-                                            "name": "RL02",
-                                            "qty": 5
-                                        }
-                                    ],
-                                    "name": "สีลิปสติก"
-                                }
-                            ],
-                            "name": "perfect lip",
-                            "price": 69,
-                            "amount": 2070
-                        },
-                        {
-                            "option": [
-                                {
-                                    "value": [
-                                        {
-                                            "name": "R2L01",
-                                            "qty": 1
-                                        },
-                                        {
-                                            "name": "R2L02",
-                                            "qty": 1
-                                        }
-                                    ],
-                                    "name": "สีลิปสติก"
-                                }
-                            ],
-                            "name": "perfect lip2",
-                            "price": 69,
-                            "amount": 2070
-                        }
-                    ]
+                        "productlist": [
+                            {
+                                "option": [
+                                    {
+                                        "value": [
+                                            {
+                                                "name": "RL01",
+                                                "qty": 13
+                                            },
+                                            {
+                                                "name": "RL02",
+                                                "qty": 10
+                                            },{
+                                                "name": "RL03",
+                                                "qty": 20
+                                            }
+                                        ],
+                                        "name": "สีลิปสติก"
+                                    }
+                                ],
+                                "name": "perfect lip",
+                                "price": 69,
+                                "amount": 2070
+                            },
+                            {
+                                "option": [
+                                    {
+                                        "value": [
+                                            {
+                                                "name": "R2L01",
+                                                "qty": 1
+                                            },
+                                            {
+                                                "name": "R2L02",
+                                                "qty": 1
+                                            }
+                                        ],
+                                        "name": "สีลิปสติก"
+                                    }
+                                ],
+                                "name": "perfect lip2",
+                                "price": 69,
+                                "amount": 2070
+                            }
+                        ]
                 }
                 request(app)
                     .post('/api/monitor/addbox/' + resp.data.orders[0]._id)
