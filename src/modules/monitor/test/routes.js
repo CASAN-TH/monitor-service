@@ -3012,14 +3012,14 @@ describe('Monitor CRUD routes tests', function () {
                                         "value": [
                                             {
                                                 "name": "RL01",
-                                                "qty": 10
+                                                "qty": 13
                                             },
                                             {
                                                 "name": "RL02",
                                                 "qty": 10
                                             },{
                                                 "name": "RL03",
-                                                "qty": 2
+                                                "qty": 20
                                             }
                                         ],
                                         "name": "สีลิปสติก"
