@@ -122,6 +122,11 @@ describe('Monitor CRUD routes tests', function () {
                                                 {
                                                     "name": "RL02",
                                                     "qty": 10
+                                                },
+                                                
+                                                {
+                                                    "name": "RL03",
+                                                    "qty": 20
                                                 }
                                             ],
                                             "name": "สีลิปสติก"
@@ -3007,11 +3012,14 @@ describe('Monitor CRUD routes tests', function () {
                                         "value": [
                                             {
                                                 "name": "RL01",
-                                                "qty": 5
+                                                "qty": 10
                                             },
                                             {
                                                 "name": "RL02",
-                                                "qty": 5
+                                                "qty": 10
+                                            },{
+                                                "name": "RL03",
+                                                "qty": 2
                                             }
                                         ],
                                         "name": "สีลิปสติก"
