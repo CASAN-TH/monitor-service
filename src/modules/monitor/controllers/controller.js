@@ -678,13 +678,59 @@ exports.reportjs = function (req, res) {
 exports.deleteBox = function (req, res, next) {
     var id = req.lableId;
     var rableById = req.rableById;
+    // console.log(rableById.orders[0].labels)
+    var dataSplice;
+
     for (let i = 0; i < rableById.orders.length; i++) {
         var order = rableById.orders[i];
         for (let j = 0; j < order.labels.length; j++) {
             var label = order.labels[j];
+
             if (label._id == id) {
-                // console.log('this work')
-                order.labels.splice(j, 1)
+                dataSplice = label;
+                order.labels.splice(j, 1);
+
+                for (let k = 0; k < dataSplice.productlist.length; k++) {
+                    var spliceProdList = dataSplice.productlist[k];
+                    // console.log('-------------')
+                    // console.log(spliceProdList.name)
+
+                    var indxProductList = order.labels[0].productlist.findIndex((el) => {
+                        return el.name === spliceProdList.name
+                    });
+                    console.log(indxProductList)
+
+                    if (indxProductList === -1) {
+                        // console.log('Pushed!!!!')
+                        order.labels[0].productlist.push(spliceProdList)
+                    }
+                    if (indxProductList !== -1) {
+                        // console.log('Not Push!!!!')
+
+                        for (let o = 0; o < order.labels[0].productlist[indxProductList].option.length; o++) {
+                            var option = order.labels[0].productlist[indxProductList].option[o];
+                            for (let p = 0; p < option.value.length; p++) {
+                                var value = option.value[p];
+                                console.log(value.name)
+
+                                for (let l = 0; l < spliceProdList.option.length; l++) {
+                                    var spliceOption = spliceProdList.option[l];
+                                    for (let m = 0; m < spliceOption.value.length; m++) {
+                                        var spliceValue = spliceOption.value[m];
+                                        if (spliceValue.name === value.name) {
+                                            console.log('--------------   ' + spliceValue.name)
+                                            value.qty += spliceValue.qty
+                                            console.log(value)
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // console.log(rableById.orders[0].labels[0].productlist[0].option[0].value)
                 rableById.save(function (err, data) {
                     if (err) {
                         return res.status(400).send({
@@ -692,7 +738,6 @@ exports.deleteBox = function (req, res, next) {
                             message: errorHandler.getErrorMessage(err)
                         });
                     } else {
-                        // console.log(data.orders[0])
                         req.result = data;
                         next();
                     };
