@@ -205,7 +205,7 @@ describe('Monitor CRUD routes tests', function () {
                                                     "qty": 20
                                                 },
                                                 {
-                                                    "name": "RL02",
+                                                    "name": "RL04",
                                                     "qty": 40
                                                 }
                                             ],
