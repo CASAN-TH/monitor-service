@@ -744,7 +744,7 @@ exports.deleteBox = function (req, res, next) {
                                 var indxSpliceValue = dataTrueValue.findIndex((indxSpliceValueData) => {
                                     return dataSplice2Value.name === indxSpliceValueData.name
                                 });
-                                console.log(indxSpliceValue)
+                                // console.log(indxSpliceValue)
                                 if (indxSpliceValue === -1) {
                                     // console.log('pushed!!!')
                                     dataTrueValue.push(dataSplice2Value)
