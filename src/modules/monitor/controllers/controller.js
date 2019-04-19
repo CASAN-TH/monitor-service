@@ -698,7 +698,7 @@ exports.deleteBox = function (req, res, next) {
                     var indxProductList = order.labels[0].productlist.findIndex((el) => {
                         return el.name === spliceProdList.name
                     });
-                    console.log(indxProductList)
+                    // console.log(indxProductList)
 
                     if (indxProductList === -1) {
                         // console.log('Pushed!!!!')
@@ -706,26 +706,57 @@ exports.deleteBox = function (req, res, next) {
                     }
                     if (indxProductList !== -1) {
                         // console.log('Not Push!!!!')
-
+                        var dataSplice2 = []
+                        var dataTrueValue = []
                         for (let o = 0; o < order.labels[0].productlist[indxProductList].option.length; o++) {
                             var option = order.labels[0].productlist[indxProductList].option[o];
                             for (let p = 0; p < option.value.length; p++) {
                                 var value = option.value[p];
-                                console.log(value.name)
+                                // console.log(value)
+                                var indxTrueValue = dataTrueValue.findIndex((findTureValueData) => {
+                                    return findTureValueData.name === value.name
+                                })
 
-                                for (let l = 0; l < spliceProdList.option.length; l++) {
-                                    var spliceOption = spliceProdList.option[l];
-                                    for (let m = 0; m < spliceOption.value.length; m++) {
-                                        var spliceValue = spliceOption.value[m];
-                                        if (spliceValue.name === value.name) {
-                                            console.log('--------------   ' + spliceValue.name)
-                                            value.qty += spliceValue.qty
-                                            console.log(value)
-                                        }
+                                if (indxTrueValue === -1) {
+                                    dataTrueValue.push(value)
+                                }
+                            }
+                            for (let l = 0; l < spliceProdList.option.length; l++) {
+                                var spliceOption = spliceProdList.option[l];
+                                for (let m = 0; m < spliceOption.value.length; m++) {
+                                    var spliceValue = spliceOption.value[m];
 
+                                    var indxDataSplice2 = dataSplice2.findIndex((indxDataSplice2Data) => {
+                                        return indxDataSplice2Data.name === spliceValue.name
+                                    });
+
+                                    if (indxDataSplice2 === -1) {
+                                        dataSplice2.push(spliceValue)
                                     }
                                 }
                             }
+                            // console.log(dataTrueValue)
+                            // console.log(dataSplice2)
+                            for (let q = 0; q < dataSplice2.length; q++) {
+                                var dataSplice2Value = dataSplice2[q];
+                                console.log('--------  ' + dataSplice2Value)
+
+                                var indxSpliceValue = dataTrueValue.findIndex((indxSpliceValueData) => {
+                                    return dataSplice2Value.name === indxSpliceValueData.name
+                                });
+                                console.log(indxSpliceValue)
+                                if (indxSpliceValue === -1) {
+                                    console.log('pushed!!!')
+                                    dataTrueValue.push(dataSplice2Value)
+                                }
+                                if (indxSpliceValue !== -1) {
+                                    console.log('edited')
+                                    dataTrueValue[indxSpliceValue].qty += dataSplice2Value.qty
+                                }
+                            }
+                            // console.log(dataTrueValue)
+                            option.value = dataTrueValue;
+                            // console.log(option.value)
                         }
                     }
                 }
@@ -912,10 +943,10 @@ exports.addBox = function (req, res, next) {
         // console.log(productlistloop.option[0].value.length)
         // console.log(productlistloop.option[0])
         if (productlistloop.option[0].value.length === 0) {
-         data.push({ch:productlistloop._id})
-            
+            data.push({ch:productlistloop._id})
+
         }
-        
+
     }
     console.log(data)
 
@@ -931,7 +962,7 @@ exports.addBox = function (req, res, next) {
         }
     }
     console.log(req.order.labels[0].productlist)
-  
+
     var order = req.order;
     req.updateorder = order;
     next()
