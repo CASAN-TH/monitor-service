@@ -3060,7 +3060,7 @@ describe('Monitor CRUD routes tests', function () {
                                             },
                                             {
                                                 "name": "R2L02",
-                                                "qty": 104
+                                                "qty": 105
                                             }
                                         ],
                                         "name": "สีลิปสติก"
@@ -3082,7 +3082,8 @@ describe('Monitor CRUD routes tests', function () {
                             return done(err);
                         }
                         var resp = res.body;
-                        // console.log(resp)
+                        // console.log(resp.data.orders[0])
+                        assert.equal(resp.data.orders[0].labels.length, 2);
                         done();
                     });
             });

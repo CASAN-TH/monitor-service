@@ -81,6 +81,7 @@ module.exports = function (app) {
     app.route('/api/monitor/addbox/:orderid')
             .post(
                 controller.addBox,
+                controller.deleteBoxIfUndifileProduct,
                 controller.updateData
                 )
 

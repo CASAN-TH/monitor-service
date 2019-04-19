@@ -739,18 +739,18 @@ exports.deleteBox = function (req, res, next) {
                             // console.log(dataSplice2)
                             for (let q = 0; q < dataSplice2.length; q++) {
                                 var dataSplice2Value = dataSplice2[q];
-                                console.log('--------  ' + dataSplice2Value)
+                                // console.log('--------  ' + dataSplice2Value)
 
                                 var indxSpliceValue = dataTrueValue.findIndex((indxSpliceValueData) => {
                                     return dataSplice2Value.name === indxSpliceValueData.name
                                 });
                                 console.log(indxSpliceValue)
                                 if (indxSpliceValue === -1) {
-                                    console.log('pushed!!!')
+                                    // console.log('pushed!!!')
                                     dataTrueValue.push(dataSplice2Value)
                                 }
                                 if (indxSpliceValue !== -1) {
-                                    console.log('edited')
+                                    // console.log('edited')
                                     dataTrueValue[indxSpliceValue].qty += dataSplice2Value.qty
                                 }
                             }
@@ -933,39 +933,47 @@ exports.addBox = function (req, res, next) {
 
 
     }
+    var orderdatacustomize = req.order;
+    req.orderdatacustomize = orderdatacustomize;
+    next();
 
-    const z = req.order.labels[0].productlist.length;
+    
+}
+
+exports.deleteBoxIfUndifileProduct = function (req, res, next) {
+
+    const z = req.orderdatacustomize.labels[0].productlist.length;
     var data = []
     for (let f = 0; f < z; f++) {
-        console.log('object')
-        // console.log(req.order.labels[0].productlist[f])
-        var productlistloop = req.order.labels[0].productlist[f];
-        // console.log(productlistloop.option[0].value.length)
-        // console.log(productlistloop.option[0])
+        var productlistloop = req.orderdatacustomize.labels[0].productlist[f];
         if (productlistloop.option[0].value.length === 0) {
-            data.push({ch:productlistloop._id})
+            data.push({ ch: productlistloop._id })
 
         }
 
     }
-    console.log(data)
+    // console.log(data)
 
     if (data !== []) {
         for (let index = 0; index < data.length; index++) {
-            var j =  req.order.labels[0].productlist.findIndex(function (params) {
-                // console.log('xxxxxxxxx',params._id)
-                // console.log('zzzzzzzzz',data[index].ch)
+            var j = req.orderdatacustomize.labels[0].productlist.findIndex(function (params) {
                 return params._id == data[index].ch
             })
-            console.log('xxx',j)
-            req.order.labels[0].productlist.splice(j,1)
+            req.orderdatacustomize.labels[0].productlist.splice(j, 1)
         }
     }
-    console.log(req.order.labels[0].productlist)
+    // console.log(req.orderdatacustomize.labels[0].productlist)
+    // console.log(req.orderdatacustomize.labels[0].productlist.length)
 
-    var order = req.order;
+    if (req.orderdatacustomize.labels[0].productlist.length === 0) {
+        req.orderdatacustomize.labels.splice(0, 1);
+    }
+
+    var order = req.orderdatacustomize;
     req.updateorder = order;
+    // console.log(req.updateorder)
     next()
+
 }
 
 exports.updateData = function (req, res) {
@@ -993,7 +1001,7 @@ exports.updateData = function (req, res) {
         element.orders[a].labels.push(cookiedata)
     });
 
-    // console.log(bigdata[0].orders[0].labels[0].productlist)
+    // console.log(bigdata[0].orders[0])
 
     Monitor.findOneAndUpdate({ "orders._id": id }, bigdata[0], { new: true }, function (err, dataupdat) {
         if (err) {
