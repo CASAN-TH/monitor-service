@@ -829,7 +829,7 @@ exports.printByLable = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            console.log(data.orders[0])
+            // console.log(data.orders[0])
         };
     });
 
@@ -889,9 +889,22 @@ exports.reportlableAll = function (req, res) {
         for (let z = 0; z < order.labels.length; z++) {
             order.labels[z].customer.tel = order.customer.tel;
             order.labels[z].customer.paymenttype = order.paymenttype;
+            order.labels[z].eprint = true
             reportorder.labels.push(order.labels[z])
         }
     }
+
+    // console.log(monitorData.orders[1])
+    monitorData.save(function (err, data) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            // console.log(data)
+        };
+    });
 
     var data = {
         template: { 'shortid': 'Syi8NVVKV' },
