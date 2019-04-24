@@ -479,7 +479,7 @@ describe('Monitor CRUD routes tests', function () {
             })
     });
 
-    xit('should be print by label', (done) => {
+    it('should be print by label', (done) => {
         request(app)
             .post('/api/monitors')
             .set('Authorization', 'Bearer ' + token)

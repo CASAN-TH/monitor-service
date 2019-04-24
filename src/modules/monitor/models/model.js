@@ -125,6 +125,10 @@ var MonitorSchema = new Schema({
                         trackno: {
                             type: String
                         },
+                        eprint: {
+                            type: Boolean,
+                            default: false
+                        },
                         customer: {
                             type: {
                                 firstname: {

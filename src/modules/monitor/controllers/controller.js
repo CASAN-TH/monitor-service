@@ -798,6 +798,7 @@ exports.getlableById = function (req, res, next, id) {
 
 exports.printByLable = function (req, res) {
     var id = req.lableId;
+    var monitor = req.rableById;
     var orders = req.rableById.orders;
     var reportByLable = {
         labels: []
@@ -810,6 +811,7 @@ exports.printByLable = function (req, res) {
                 // console.log(label)
                 // console.log(order.customer.tel)
                 // console.log(order.paymenttype)
+                label.eprint = true;
                 var dataReport;
                 dataReport = label;
                 dataReport.customer.tel = order.customer.tel;
@@ -819,6 +821,17 @@ exports.printByLable = function (req, res) {
         }
     }
     // console.log(reportByLable)
+    // console.log(monitor)
+    monitor.save(function (err, data) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            console.log(data.orders[0])
+        };
+    });
 
     var data = {
         template: { 'shortid': 'Syi8NVVKV' },
@@ -937,7 +950,7 @@ exports.addBox = function (req, res, next) {
     req.orderdatacustomize = orderdatacustomize;
     next();
 
-    
+
 }
 
 exports.deleteBoxIfUndifileProduct = function (req, res, next) {
