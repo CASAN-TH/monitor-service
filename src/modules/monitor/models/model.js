@@ -11,7 +11,7 @@ var Schema = mongoose.Schema;
 // var counter = mongoose.model('counter', counterSchema);
 
 var MonitorSchema = new Schema({
-    prefix: { type: String},
+    prefix: { type: String },
     seq: { type: Number, default: 0 },
     totalorderamount: {
         type: Number
@@ -108,14 +108,14 @@ var MonitorSchema = new Schema({
                                                 }
                                             ]
                                         },
-            
+
                                     }
                                 ]
                             },
                             price: {
                                 type: Number
                             },
-                            totalqty:{
+                            totalqty: {
                                 type: Number
                             },
                             amount: {
@@ -168,6 +168,13 @@ var MonitorSchema = new Schema({
                         eprint: {
                             type: Boolean,
                             default: false
+                        },
+                        ordernosub: {
+                            type: String,
+                            default: ''
+                        },
+                        qtyreward: {
+                            type: String
                         },
                         customer: {
                             type: {

@@ -803,26 +803,30 @@ exports.printByLable = function (req, res) {
     // console.log(req.rableById)
     var reportByLable = {
         labels: [],
-        rewards:[],
-        orderno:''
     }
     for (let i = 0; i < orders.length; i++) {
         var order = orders[i];
+
         for (let j = 0; j < order.labels.length; j++) {
             var label = order.labels[j];
             if (label._id == id) {
-                // console.log(label)
+                // console.log('xx',label)
                 // console.log(order.customer.tel)
                 // console.log(order.paymenttype)
+                
+        
                 label.eprint = true;
+                label.ordernosub = order.orderno
+                order.labels[0].qtyreward = order.rewards[0].totalqty;
                 var dataReport;
                 var datarewards;
                 dataReport = label;
                 dataReport.customer.tel = order.customer.tel;
                 dataReport.customer.paymenttype = order.paymenttype;
-                datarewards = order.rewards
-                reportByLable.orderno = order.orderno;
-                reportByLable.rewards.push(datarewards[0])
+                // dataReport.jjjjj = 'ssss'
+                // datarewards = order.rewards
+                // reportByLable.orderno = order.orderno;
+                // reportByLable.rewards.push(datarewards[0])
                 reportByLable.labels.push(dataReport)
             }
         }
