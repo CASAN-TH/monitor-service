@@ -24,6 +24,7 @@ describe('Monitor CRUD routes tests', function () {
             },
             "orders": [
                 {
+                    "orderno": "asasasasa1111",
                     "customer": {
                         "address": {
                             "houseno": "55/7",
@@ -38,7 +39,25 @@ describe('Monitor CRUD routes tests', function () {
                         "lastname": "lertlao",
                         "tel": "0995689456"
                     },
-
+                    "rewards": [
+                        {
+                            "option": [
+                                {
+                                    "value": [
+                                        {
+                                            "name": "แหวนทอง",
+                                            "qty": 1
+                                        }
+                                    ],
+                                    "name": "ประเภท"
+                                }
+                            ],
+                            "name": "ของรางวัล",
+                            "price": 0,
+                            "totalqty": 1,
+                            "amount": 0
+                        },
+                    ],
                     "items": [
                         {
 
@@ -123,7 +142,7 @@ describe('Monitor CRUD routes tests', function () {
                                                     "name": "RL02",
                                                     "qty": 10
                                                 },
-                                                
+
                                                 {
                                                     "name": "RL03",
                                                     "qty": 20
@@ -221,6 +240,7 @@ describe('Monitor CRUD routes tests', function () {
                     ]
                 },
                 {
+                    "orderno": "asasasasa2222",
                     "customer": {
                         "address": {
                             "houseno": "55/7 test",
@@ -450,7 +470,7 @@ describe('Monitor CRUD routes tests', function () {
 
     });
 
-    xit('should be print All', (done) => {
+    it('should be print All', (done) => {
         request(app)
             .post('/api/monitors')
             .set('Authorization', 'Bearer ' + token)
@@ -479,7 +499,7 @@ describe('Monitor CRUD routes tests', function () {
             })
     });
 
-    xit('should be print by label', (done) => {
+    it('should be print by label', (done) => {
         request(app)
             .post('/api/monitors')
             .set('Authorization', 'Bearer ' + token)
@@ -3026,51 +3046,51 @@ describe('Monitor CRUD routes tests', function () {
                 var resp = res.body;
 
                 var addbox = {
-                        "productlist": [
-                            {
-                                "option": [
-                                    {
-                                        "value": [
-                                            {
-                                                "name": "RL01",
-                                                "qty": 13
-                                            },
-                                            {
-                                                "name": "RL02",
-                                                "qty": 10
-                                            },{
-                                                "name": "RL03",
-                                                "qty": 20
-                                            }
-                                        ],
-                                        "name": "สีลิปสติก"
-                                    }
-                                ],
-                                "name": "perfect lip",
-                                "price": 69,
-                                "amount": 2070
-                            },
-                            {
-                                "option": [
-                                    {
-                                        "value": [
-                                            {
-                                                "name": "R2L01",
-                                                "qty": 16
-                                            },
-                                            {
-                                                "name": "R2L02",
-                                                "qty": 105
-                                            }
-                                        ],
-                                        "name": "สีลิปสติก"
-                                    }
-                                ],
-                                "name": "perfect lip2",
-                                "price": 69,
-                                "amount": 2070
-                            }
-                        ]
+                    "productlist": [
+                        {
+                            "option": [
+                                {
+                                    "value": [
+                                        {
+                                            "name": "RL01",
+                                            "qty": 13
+                                        },
+                                        {
+                                            "name": "RL02",
+                                            "qty": 10
+                                        }, {
+                                            "name": "RL03",
+                                            "qty": 20
+                                        }
+                                    ],
+                                    "name": "สีลิปสติก"
+                                }
+                            ],
+                            "name": "perfect lip",
+                            "price": 69,
+                            "amount": 2070
+                        },
+                        {
+                            "option": [
+                                {
+                                    "value": [
+                                        {
+                                            "name": "R2L01",
+                                            "qty": 16
+                                        },
+                                        {
+                                            "name": "R2L02",
+                                            "qty": 105
+                                        }
+                                    ],
+                                    "name": "สีลิปสติก"
+                                }
+                            ],
+                            "name": "perfect lip2",
+                            "price": 69,
+                            "amount": 2070
+                        }
+                    ]
                 }
                 request(app)
                     .post('/api/monitor/addbox/' + resp.data.orders[0]._id)
