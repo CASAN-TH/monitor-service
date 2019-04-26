@@ -887,19 +887,26 @@ exports.reportlableAll = function (req, res) {
     var monitorData = req.data;
     // console.log(monitorData)
     var reportorder = {
-        labels: []
+        labels: [],
+        rewards: [],
+        orderno: ''
     };
     for (let i = 0; i < monitorData.orders.length; i++) {
         var order = monitorData.orders[i];
+        reportorder.orderno = order.orderno;
         for (let z = 0; z < order.labels.length; z++) {
             order.labels[z].customer.tel = order.customer.tel;
             order.labels[z].customer.paymenttype = order.paymenttype;
             order.labels[z].eprint = true
             reportorder.labels.push(order.labels[z])
         }
+        for (let y = 0; y < order.rewards.length; y++) {
+            reportorder.rewards.push(order.rewards[y])
+        }
     }
 
     // console.log(monitorData.orders[1])
+    // console.log(reportorder)
     monitorData.save(function (err, data) {
         if (err) {
             return res.status(400).send({
