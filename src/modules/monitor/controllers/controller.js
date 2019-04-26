@@ -802,7 +802,7 @@ exports.printByLable = function (req, res) {
     var orders = req.rableById.orders;
     // console.log(req.rableById)
     var reportByLable = {
-        labels: [],
+        labels: []
     }
     for (let i = 0; i < orders.length; i++) {
         var order = orders[i];
@@ -813,8 +813,8 @@ exports.printByLable = function (req, res) {
                 // console.log('xx',label)
                 // console.log(order.customer.tel)
                 // console.log(order.paymenttype)
-                
-        
+
+
                 label.eprint = true;
                 label.ordernosub = order.orderno
                 order.labels[0].qtyreward = order.rewards[0].totalqty;
@@ -831,7 +831,7 @@ exports.printByLable = function (req, res) {
             }
         }
     }
-    console.log(reportByLable)
+    // console.log(reportByLable)
     // console.log(monitor)
     monitor.save(function (err, data) {
         if (err) {
@@ -893,21 +893,21 @@ exports.reportlableAll = function (req, res) {
     var monitorData = req.data;
     // console.log(monitorData)
     var reportorder = {
-        labels: [],
-        rewards: [],
-        orderno: ''
+        labels: []
     };
     for (let i = 0; i < monitorData.orders.length; i++) {
         var order = monitorData.orders[i];
-        reportorder.orderno = order.orderno;
         for (let z = 0; z < order.labels.length; z++) {
+            // console.log(z)
             order.labels[z].customer.tel = order.customer.tel;
             order.labels[z].customer.paymenttype = order.paymenttype;
             order.labels[z].eprint = true
+            order.labels[z].ordernosub = order.orderno
+            if(z === 0 && order.rewards[0]){
+                order.labels[0].qtyreward = order.rewards[0].totalqty;
+            }
+            // console.log(order.labels[z])
             reportorder.labels.push(order.labels[z])
-        }
-        for (let y = 0; y < order.rewards.length; y++) {
-            reportorder.rewards.push(order.rewards[y])
         }
     }
 
