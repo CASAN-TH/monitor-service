@@ -816,16 +816,18 @@ exports.printByLable = function (req, res) {
                 // console.log(order.paymenttype)
                 label.eprint = true;
                 var dataReport;
+                var datarewards;
                 dataReport = label;
                 dataReport.customer.tel = order.customer.tel;
                 dataReport.customer.paymenttype = order.paymenttype;
-
+                datarewards = order.rewards
                 reportByLable.orderno = order.orderno;
+                reportByLable.rewards.push(datarewards[0])
                 reportByLable.labels.push(dataReport)
             }
         }
     }
-    // console.log(reportByLable)
+    console.log(reportByLable)
     // console.log(monitor)
     monitor.save(function (err, data) {
         if (err) {
