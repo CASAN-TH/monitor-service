@@ -817,7 +817,9 @@ exports.printByLable = function (req, res) {
 
                 label.eprint = true;
                 label.ordernosub = order.orderno
-                order.labels[0].qtyreward = order.rewards[0].totalqty;
+                if (order && order.rewards[0] && order.rewards[0].totalqty) {
+                    order.labels[0].qtyreward = order.rewards[0].totalqty;
+                }
                 var dataReport;
                 var datarewards;
                 dataReport = label;
@@ -903,7 +905,7 @@ exports.reportlableAll = function (req, res) {
             order.labels[z].customer.paymenttype = order.paymenttype;
             order.labels[z].eprint = true
             order.labels[z].ordernosub = order.orderno
-            if(z === 0 && order.rewards[0]){
+            if (z === 0 && order.rewards[0]) {
                 order.labels[0].qtyreward = order.rewards[0].totalqty;
             }
             // console.log(order.labels[z])
