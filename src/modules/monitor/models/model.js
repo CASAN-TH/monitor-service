@@ -84,15 +84,51 @@ var MonitorSchema = new Schema({
                         }
                     },
                 },
-                items: {
+                rewards: {
                     type: [
                         {
                             name: {
                                 type: String
                             },
-                            reward: {
-                                type: Boolean,
-                                default: false
+                            option: {
+                                type: [
+                                    {
+                                        name: {
+                                            type: String
+                                        },
+                                        value: {
+                                            type: [
+                                                {
+                                                    name: {
+                                                        type: String
+                                                    },
+                                                    qty: {
+                                                        type: Number
+                                                    }
+                                                }
+                                            ]
+                                        },
+            
+                                    }
+                                ]
+                            },
+                            price: {
+                                type: Number
+                            },
+                            totalqty:{
+                                type: Number
+                            },
+                            amount: {
+                                type: Number
+                            }
+                        }
+                    ]
+                },
+                items: {
+                    type: [
+                        {
+                            name: {
+                                type: String
                             },
                             option: {
                                 type: [
@@ -171,10 +207,6 @@ var MonitorSchema = new Schema({
                                 {
                                     name: {
                                         type: String
-                                    },
-                                    reward: {
-                                        type: Boolean,
-                                        default: false
                                     },
                                     option: {
                                         type: [
