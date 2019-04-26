@@ -800,7 +800,7 @@ exports.printByLable = function (req, res) {
     var id = req.lableId;
     var monitor = req.rableById;
     var orders = req.rableById.orders;
-    console.log(req.rableById)
+    // console.log(req.rableById)
     var reportByLable = {
         labels: [],
         rewards:[],
