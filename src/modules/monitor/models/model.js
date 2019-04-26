@@ -174,7 +174,7 @@ var MonitorSchema = new Schema({
                             default: ''
                         },
                         qtyreward: {
-                            type: String
+                            type: Number
                         },
                         customer: {
                             type: {
