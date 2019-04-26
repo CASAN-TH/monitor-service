@@ -800,8 +800,11 @@ exports.printByLable = function (req, res) {
     var id = req.lableId;
     var monitor = req.rableById;
     var orders = req.rableById.orders;
+    console.log(req.rableById)
     var reportByLable = {
-        labels: []
+        labels: [],
+        rewards:[],
+        orderno:''
     }
     for (let i = 0; i < orders.length; i++) {
         var order = orders[i];
@@ -816,6 +819,8 @@ exports.printByLable = function (req, res) {
                 dataReport = label;
                 dataReport.customer.tel = order.customer.tel;
                 dataReport.customer.paymenttype = order.paymenttype;
+
+                reportByLable.orderno = order.orderno;
                 reportByLable.labels.push(dataReport)
             }
         }
