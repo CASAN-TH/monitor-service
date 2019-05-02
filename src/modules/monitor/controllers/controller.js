@@ -173,17 +173,18 @@ exports.delete = function (req, res) {
 
 exports.reportAllData = function (req, res, next) {
     var orderTeam = req.data
-    // console.log(orderTeam)
+    // console.log("team ",orderTeam)
     var productData = [];
     var totalprice = 0;
     var totalQty = 0;
 
     for (let i = 0; i < orderTeam.orders.length; i++) {
         var order = orderTeam.orders[i];
+        console.log(order.rewards)
+
         for (let j = 0; j < order.items.length; j++) {
             var item = order.items[j];
             totalprice = totalprice + item.amount
-            // console.log(item.name)
             var indxName = productData.findIndex(function (dataName) {
                 return item.name === dataName.name
             })
@@ -267,7 +268,8 @@ exports.reportDetailData = function (req, res, next) {
                 firstname: order.customer.firstname,
                 lastname: order.customer.lastname
             },
-            items: itemsData
+            items: itemsData,
+            rewards: order.rewards?order.rewards:[]
         });
 
     }
@@ -660,6 +662,7 @@ exports.findAndPushQty = function (req, res, next) {
 
 exports.reportjs = function (req, res) {
     var report = req.result;
+    console.log(report)
     var data = {
         template: { 'shortid': 'H1xD10Pwu4' },
         data: report,

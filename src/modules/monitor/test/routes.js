@@ -3109,6 +3109,34 @@ describe('Monitor CRUD routes tests', function () {
             });
     });
 
+    xit('should be Monitor get report Detail', function (done) {
+
+        request(app)
+            .post('/api/monitors')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockup)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                request(app)
+                    .get('/api/monitor/reportdetail/' + resp.data._id)
+                    .set('Authorization', 'Bearer ' + token)
+                    .expect(200)
+                    .end(function (err, res) {
+                        if (err) {
+                            return done(err);
+                        }
+                        var resp = res.body;
+        
+                        done();
+                    });
+            });
+
+    });
+
 
 
     afterEach(function (done) {
