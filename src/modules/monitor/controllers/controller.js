@@ -7,6 +7,8 @@ var mongoose = require('mongoose'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
     _ = require('lodash');
 
+var jsReportUri = process.env.JSREPORT_URI || 'http://54.169.48.201/api/report';
+
 exports.getList = function (req, res) {
     Monitor.find(function (err, datas) {
         if (err) {
@@ -671,7 +673,7 @@ exports.reportjs = function (req, res) {
         }
     }
     var options = {
-        uri: 'http://13.250.98.127/api/report',
+        uri: jsReportUri,
         method: 'POST',
         json: data
     }
@@ -857,7 +859,7 @@ exports.printByLable = function (req, res) {
         }
     }
     var options = {
-        uri: 'http://13.250.98.127/api/report',
+        uri: jsReportUri,
         method: 'POST',
         json: data
     }
@@ -885,7 +887,7 @@ exports.reportlable = function (req, res) {
         }
     }
     var options = {
-        uri: 'http://13.250.98.127/api/report',
+        uri: jsReportUri,
         method: 'POST',
         json: data
     }
@@ -937,7 +939,7 @@ exports.reportlableAll = function (req, res) {
         }
     }
     var options = {
-        uri: 'http://13.250.98.127/api/report',
+        uri: jsReportUri,
         method: 'POST',
         json: data
     }
